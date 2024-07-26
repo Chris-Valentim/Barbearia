@@ -1,5 +1,6 @@
-const somar = (a: number, b: number): number => {
-  return a + b;
-};
-
-export { somar };
+export * from "./constants";
+export * from "./professional";
+export * from "./service";
+export * from "./user";
+// export * from "./agendamento";
+// export * from "./utils";
