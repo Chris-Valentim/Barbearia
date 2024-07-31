@@ -1,9 +1,9 @@
 'use client'
 import { Service } from "@barba/core"
 import { useRouter } from 'next/navigation'
+import { useServices } from "@barba/ui"
 import ItemService from "./ItemService"
 import Title from "../shared/Title"
-import useServices from "@/data/hooks/useServices"
 
 const OurServices = () => {
   const router = useRouter()
