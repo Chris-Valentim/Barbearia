@@ -2,7 +2,7 @@
 
 import OurClients from "@/components/client/OurClients"
 import TitleSlogan from "@/components/landing/TitleSlogan"
-import OurProfessionals from '@/components/profissional/OurProfessionals'
+import OurProfessionals from '@/components/professional/OurProfessionals'
 import OurServices from "@/components/service/OurServices"
 import ContainerWithBackground from "@/components/shared/ContainerWithBackground"
 
