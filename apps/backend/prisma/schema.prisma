@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Professional {
+  id                   Int           @id @default(autoincrement())
+  name                 String        @unique
+  description            String
+  imageUrl            String
+  assessment            Float
+  assessmentAmount      Int
+  schedules         Scheduling[]
+
+  @@map("profissional")
+}
+
+model Service {
+  id           Int           @id @default(autoincrement())
+  name         String        @unique
+  description    String
+  price        Float
+  slotsAmount    Int
+  imageUrl    String
+  schedules Scheduling[]
+
+  @@map("servico")
+}
+
+model Scheduling {
+  id             Int          @id @default(autoincrement())
+  emailClient   String
+  date           DateTime     @db.Timestamptz(3)
+  professional   Professional @relation(fields: [professionalId], references: [id])
+  professionalId Int
+  services       Service[]
+
+  @@map("schedules")
+}
