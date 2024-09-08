@@ -23,7 +23,7 @@ const TitleSlogan = () => {
               Lendárias
             </span>
           </h1>
-          <p className='w-96 text-center text-zinc-400 text-base sm:text-lg fontextralight'>
+          <p className='w-96 text-center text-zinc-400 text-base sm:text-lg font-extralight'>
             🤘 Seu estilo é o nosso rock! 🤘
           </p>
           <Link href='/scheduling' className='bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold text-base md:text-lg py-2 px-4 rounded-md hover:from-green-600 houver:to-green-700'>

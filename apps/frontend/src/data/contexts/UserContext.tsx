@@ -7,7 +7,7 @@ import useLocalStorage from '../hooks/useLocalStorage'
 export interface UserContextProps {
   loading: boolean
   user: User | null
-  enter: (user: User) => Promise<void>
+  singIn: (user: User) => Promise<void>
   getOut: () => void
 }
 
@@ -33,7 +33,7 @@ export const UserTaster = ({ children }: any) => {
     [get]
   )
 
-  async function enter(user: User) {
+  async function singIn(user: User) {
     setUser(user)
     set('user', user)
   }
@@ -51,7 +51,7 @@ export const UserTaster = ({ children }: any) => {
       value={{
         loading,
         user,
-        enter,
+        singIn,
         getOut
       }}
     >

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { ContentScheduling } from '@/data/contexts/ContentScheduling'
+import { SchedulingContext } from '@/data/contexts/SchedulingContext'
 
-const useScheduling = () => useContext(ContentScheduling)
+const useScheduling = () => useContext(SchedulingContext)
 export default useScheduling

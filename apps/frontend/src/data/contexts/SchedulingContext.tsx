@@ -1,10 +1,10 @@
 import { createContext, useCallback, useEffect, useState } from "react";
 import { Professional, Service } from "@barba/core";
-import UsefulDate from '../../../../../packages/core/src/utils/UsefulDate'
+import { UsefulDate } from '@barba/core'
 import useUser from '../hooks/useUser'
 import useAPI from '../hooks/useAPI'
 
-interface ContentSchedulingProps {
+interface SchedulingContextProps {
   professional: Professional | null
   services: Service[]
   date: Date
@@ -18,7 +18,7 @@ interface ContentSchedulingProps {
   schedule(): Promise<void>
 }
 
-const ContentScheduling = createContext({} as ContentSchedulingProps)
+const SchedulingContext = createContext({} as SchedulingContextProps)
 
 const SchedulingProvider = ({ children }: { children: React.ReactNode }) => {
   const [professional, setProfessional] = useState<Professional | null>(null)
@@ -105,7 +105,7 @@ const SchedulingProvider = ({ children }: { children: React.ReactNode }) => {
   }, [date, professional, getBusySchedules])
 
   return (
-    <ContentScheduling.Provider value={{
+    <SchedulingContext.Provider value={{
       date,
       professional,
       busySchedules,
@@ -119,9 +119,9 @@ const SchedulingProvider = ({ children }: { children: React.ReactNode }) => {
       schedule,
     }}>
       {children}
-    </ContentScheduling.Provider>
+    </SchedulingContext.Provider>
   )
 }
 
-export { ContentScheduling, SchedulingProvider }
+export { SchedulingContext, SchedulingProvider }
 

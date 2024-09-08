@@ -10,7 +10,9 @@ const ItemService = (props: ItemServiceProps) => {
   return (
     <div className={`
       flex rounded-xl overflow-hidden bg-zinc-800 ${props.onClick && 'cursor-pointer'} select-none 
-    `}>
+    `}
+      onClick={() => props.onClick?.(props.service)}
+    >
       <Image
         src={props.service.imageUrl}
         width={150}

@@ -17,7 +17,7 @@ const UserForce = (props: any) => {
   }
 
   if (!user?.email && loading) return <div>Carregando...</div>
-  if (!user?.email) return redirect(`/enter?destiny=${path}`)
+  if (!user?.email) return redirect(`/singIn?destiny=${path}`)
 
   return props.children
 }

@@ -3,8 +3,8 @@ import { useState } from 'react'
 import { Professional, Service } from '@barba/core'
 import useScheduling from '@/data/hooks/useScheduling'
 import Summary from '@/components/scheduling/Summary'
-import ServiceInput from '@/components/scheduling/ServiceInput'
-import ProfessionalInput from '@/components/scheduling/ProfissionalInput'
+import ServicesInput from '@/components/scheduling/ServicesInput'
+import ProfessionalInput from '@/components/scheduling/ProfessionalInput'
 import Steps from '@/components/shared/Steps'
 import DateInput from '@/components/scheduling/DateInput'
 import Header from '@/components/shared/Header'
@@ -26,7 +26,7 @@ const PageScheduling = () => {
     setAllowsNextStep(!!professional)
   }
 
-  function servicesChanged(service: Service[]) {
+  function servicesChanged(services: Service[]) {
     selectServices(services)
     setAllowsNextStep(services.length > 0)
   }
@@ -53,7 +53,7 @@ const PageScheduling = () => {
           ]}
         >
           <ProfessionalInput professional={professional} professionalHasChanged={professionalChanged} />
-          <ServiceInput services={services} serviceHasChanged={servicesChanged} />
+          <ServicesInput services={services} serviceHasChanged={servicesChanged} />
           <DateInput
             date={date}
             dateChanged={dateChanged}

@@ -9,7 +9,8 @@ const OurClients = () => {
   const cards = clients.map((client, i) => {
     return {
       id: client.id,
-      content: <CustomerItem name={client.name} testimony={client.testimony} />,
+      content: <CustomerItem name={client.name}
+        testimony={client.testimony} />,
       className: classes[i],
       thumbnail: client.imageUrl
     }

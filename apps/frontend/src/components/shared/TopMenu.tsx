@@ -16,7 +16,7 @@ const TopMenu = () => {
           {user ? (
             <UserMenu user={user} />
           ) : (
-            <Link href='/enter'>
+            <Link href='/singIn'>
               Entrar
             </Link>
           )}

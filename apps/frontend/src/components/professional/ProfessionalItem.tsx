@@ -23,14 +23,22 @@ const ProfessionalItem = (props: ProfessionalItemProps) => {
           className='object-cover object-top rounded-t-lg'
         />
       </div>
-      <div className='flex gap-3 flex-wrap'>
-        <Assessment value={props.professional.assessment} amount={props.professional.assessmentAmount} />
-      </div>
-      <div className='flex gap-3 text-zinc-300'>
-        <IconBrandYoutube stroke={1} />
-        <IconBrandInstagram stroke={1} />
-        <IconBrandX stroke={1} />
-        <IconBrandLinkedin stroke={1} />
+      <div className='flex flex-col p-4 gap-5'>
+        <span className='text-2xl font-black'>
+          {props.professional.name}
+        </span>
+        <span className='text-sm text-zinc-400'>
+          {props.professional.description}
+        </span>
+        <div className='flex gap-3 flex-wrap'>
+          <Assessment value={props.professional.assessment} amount={props.professional.assessmentAmount} />
+        </div>
+        <div className='flex gap-3 text-zinc-300'>
+          <IconBrandYoutube stroke={1} />
+          <IconBrandInstagram stroke={1} />
+          <IconBrandX stroke={1} />
+          <IconBrandLinkedin stroke={1} />
+        </div>
       </div>
     </div>
   )
