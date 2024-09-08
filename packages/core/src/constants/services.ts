@@ -8,7 +8,7 @@ const services: Service[] = [
       "Venha receber um corte de Viking, com lâmina na pele e estilo de guerreiro. Saia pronto para enfrentar qualquer batalha com um visual que impõe respeito.",
     price: 55,
     slotsAmount: 3,
-    imageUrl: "/servicos/corte-de-cabelo.jpg",
+    imageUrl: "/services/corte-de-cabelo.jpg",
   },
   {
     id: 2,
@@ -17,7 +17,7 @@ const services: Service[] = [
       "Venha dar um trato na sua barba de lenhador, com aparo preciso e estilo de macho raiz. Saia com uma barba que impõe respeito e faz tremer até as árvores.",
     price: 45,
     slotsAmount: 2,
-    imageUrl: "/servicos/corte-de-barba.jpg",
+    imageUrl: "/services/corte-de-barba.jpg",
   },
   {
     id: 3,
@@ -26,7 +26,7 @@ const services: Service[] = [
       "Venha transformar suas patas de urso em garras de lobo. Nosso serviço de Manicure & Pedicure para homens é tão bruto quanto você, mas com um toque de classe.",
     price: 40,
     slotsAmount: 2,
-    imageUrl: "/servicos/manicure-pedicure.jpg",
+    imageUrl: "/services/manicure-pedicure.jpg",
   },
   {
     id: 4,
@@ -35,7 +35,7 @@ const services: Service[] = [
       'Nosso combo "Alpha" inclui um corte de cabelo de Viking, uma barba de lenhador e manicure & pedicure de gladiador. Saia pronto para enfrentar qualquer batalha com estilo e unhas afiadas.',
     price: 95,
     slotsAmount: 2,
-    imageUrl: "/servicos/combo.jpg",
+    imageUrl: "/services/combo.jpg",
   },
   {
     id: 5,
@@ -44,7 +44,7 @@ const services: Service[] = [
       "Transforme seu pequeno aventureiro em um mini caçador, com um corte cheio de atitude e estilo. Cabelo afiado como uma guitarra e maneiro como uma Harley.",
     price: 60,
     slotsAmount: 2,
-    imageUrl: "/servicos/corte-infantil.jpg",
+    imageUrl: "/services/corte-infantil.jpg",
   },
   {
     id: 6,
@@ -53,7 +53,7 @@ const services: Service[] = [
       "Prepare-se para o grande dia com um tratamento digno de um verdadeiro guerreiro da estrada. Corte de cabelo afiado, barba de lenhador e manicure de motoqueiro, tudo enquanto você relaxa ao som de rock pesado.",
     price: 189,
     slotsAmount: 2,
-    imageUrl: "/servicos/dia-de-noivo.jpg",
+    imageUrl: "/services/dia-de-noivo.jpg",
   },
 ];
 
