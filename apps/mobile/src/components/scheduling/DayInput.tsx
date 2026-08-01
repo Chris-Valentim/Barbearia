@@ -1,4 +1,4 @@
-import { UsefulDate } from "@barba/core";
+import { UsefulDate } from "@barba/contracts";
 import { StyleSheet, Text, Pressable, View } from "react-native";
 
 export interface DayInputProps {

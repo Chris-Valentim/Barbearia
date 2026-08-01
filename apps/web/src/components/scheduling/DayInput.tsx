@@ -1,4 +1,4 @@
-import { UsefulDate } from "@barba/core"
+import { UsefulDate } from "@barba/contracts"
 
 export interface DayInputProps {
   date: Date

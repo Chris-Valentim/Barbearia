@@ -1,4 +1,4 @@
-import { UsefulPhone } from "@barba/core";
+import { UsefulPhone } from "@barba/contracts";
 import { StyleSheet, View, Image, Text, Pressable } from "react-native";
 import useUser from "@/src/data/hooks/useUser";
 import React from "react";

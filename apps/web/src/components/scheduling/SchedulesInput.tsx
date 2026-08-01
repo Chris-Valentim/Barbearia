@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import { IconX } from '@tabler/icons-react'
-import { UsefulAgenda, UsefulDate } from '@barba/core'
+import { UsefulAgenda, UsefulDate } from '@barba/contracts'
 import useScheduling from '@/data/hooks/useScheduling'
 
 export interface SchedulesInputProps {

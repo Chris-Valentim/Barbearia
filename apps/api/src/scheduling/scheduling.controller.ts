@@ -1,4 +1,4 @@
-import { Scheduling } from "@barba/core";
+import { Scheduling } from "@barba/contracts";
 import GetBusySchedules from './domain/GetBusySchedules'
 import { RepositoryScheduling } from './scheduling.repository'
 import { Body, Controller, Get, Param, Post } from "@nestjs/common";

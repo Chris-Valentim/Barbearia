@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image } from "react-native";
-import { Scheduling } from "@barba/core";
+import { Scheduling } from "@barba/contracts";
 import useAPI from "@/src/data/hooks/useAPI";
 import { useEffect, useState } from "react";
 import SchedulingItem from './SchedulingItem'

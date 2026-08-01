@@ -1,7 +1,7 @@
 'use client'
 import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
-import { UsefulPhone } from "@barba/core"
+import { UsefulPhone } from "@barba/contracts"
 import useUser from "@/data/hooks/useUser"
 import Logo from "../shared/Logo"
 import Image from "next/image"

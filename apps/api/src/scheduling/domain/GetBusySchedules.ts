@@ -1,4 +1,4 @@
-import { TIME_SLOT } from '@barba/core'
+import { TIME_SLOT } from '@barba/contracts'
 import CalendarRepository from './CalendarRepository'
 
 /**

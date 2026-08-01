@@ -3,7 +3,7 @@ import {
   Professional as PrismaProfessional,
   Service as PrismaService,
 } from 'prisma/prisma-client';
-import { services, professionals } from '@barba/core';
+import { services, professionals } from '@barba/contracts';
 
 const prisma = new PrismaClient();
 

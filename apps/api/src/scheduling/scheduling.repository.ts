@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import CalendarRepository from './domain/CalendarRepository';
-import { Scheduling } from "@barba/core";
+import { Scheduling } from "@barba/contracts";
 import { PrismaService } from "src/db/prisma.service";
 
 @Injectable()

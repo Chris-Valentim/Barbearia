@@ -9,7 +9,7 @@
         "lint": "next lint"
     },
     "dependencies": {
-        "@barba/core": "*",
+        "@barba/contracts": "*",
         "@barba/ui": "*",
         "@radix-ui/react-dropdown-menu": "^2.1.1",
         "@tabler/icons-react": "^3.11.0",

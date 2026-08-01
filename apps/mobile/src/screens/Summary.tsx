@@ -1,5 +1,5 @@
 import { StyleSheet, Text, Pressable, View } from "react-native";
-import { UsefulDate } from "@barba/core";
+import { UsefulDate } from "@barba/contracts";
 import useScheduling from "../data/hooks/useScheduling";
 
 const Summary = ({ navigation }: any) => {

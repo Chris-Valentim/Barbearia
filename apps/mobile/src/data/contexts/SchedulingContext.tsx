@@ -1,6 +1,6 @@
 import { createContext, useCallback, useEffect, useState } from 'react'
-import { Professional, Service } from '@barba/core'
-import { UsefulDate } from '@barba/core'
+import { Professional, Service } from '@barba/contracts'
+import { UsefulDate } from '@barba/contracts'
 import useUser from '../hooks/useUser'
 import useAPI from '../hooks/useAPI'
 

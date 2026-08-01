@@ -1,4 +1,4 @@
-import { services } from '@barba/core'
+import { services } from '@barba/contracts'
 
 export default function useServices() {
     return {

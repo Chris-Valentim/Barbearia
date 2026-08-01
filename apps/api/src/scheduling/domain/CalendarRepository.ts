@@ -1,4 +1,4 @@
-import { Scheduling } from '@barba/core'
+import { Scheduling } from '@barba/contracts'
 
 /**
  * Porta de saída do domínio de agendamento. A implementação concreta vive em

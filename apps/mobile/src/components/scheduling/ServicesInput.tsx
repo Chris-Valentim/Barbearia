@@ -1,5 +1,5 @@
 import { useServices } from "@barba/ui";
-import { Service } from "@barba/core";
+import { Service } from "@barba/contracts";
 import { Image, StyleSheet, Text, Pressable, View } from "react-native";
 import images from '../../data/constants/images'
 

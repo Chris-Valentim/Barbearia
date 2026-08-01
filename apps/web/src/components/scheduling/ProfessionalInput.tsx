@@ -1,5 +1,5 @@
 import { useProfessionals } from "@barba/ui";
-import { Professional } from "@barba/core";
+import { Professional } from "@barba/contracts";
 import Image from "next/image";
 
 export interface ProfessionalInputProps {

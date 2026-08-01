@@ -1,5 +1,5 @@
 'use client'
-import { Service } from "@barba/core"
+import { Service } from "@barba/contracts"
 import { useRouter } from 'next/navigation'
 import { useServices } from "@barba/ui"
 import ItemService from "./ItemService"

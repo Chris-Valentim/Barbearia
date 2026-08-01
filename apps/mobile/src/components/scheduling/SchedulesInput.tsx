@@ -1,4 +1,4 @@
-import { UsefulAgenda, UsefulDate } from "@barba/core";
+import { UsefulAgenda, UsefulDate } from "@barba/contracts";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import useScheduling from '../../data/hooks/useScheduling'
