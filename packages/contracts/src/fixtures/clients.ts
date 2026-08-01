@@ -1,4 +1,6 @@
-const clients = [
+import Client from "../client/Client";
+
+const clients: Client[] = [
   {
     id: 1,
     imageUrl: "/clients/cliente-1.jpg",
