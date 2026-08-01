@@ -37,7 +37,7 @@ model Service {
 model Scheduling {
   id             Int          @id @default(autoincrement())
   emailClient   String
-  date           DateTime     @db.Timestamptz(3)
+  date           DateTime
   professional   Professional @relation(fields: [professionalId], references: [id])
   professionalId Int
   services       Service[]

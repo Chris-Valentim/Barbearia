@@ -9,7 +9,7 @@ export class RepositoryScheduling implements CalendarRepository {
 
   async create(scheduling: Scheduling): Promise<void> {
     await this.prismaService.scheduling.create({
-      date: {
+      data: {
         date: scheduling.date,
         emailClient: scheduling.emailClient, 
         professional: { connect: { id: scheduling.professional.id}},
