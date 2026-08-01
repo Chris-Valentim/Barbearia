@@ -1,6 +1,11 @@
-import { TIME_SLOT } from '../constants'
+import { TIME_SLOT } from '@barba/core'
 import CalendarRepository from './CalendarRepository'
- 
+
+/**
+ * Caso de uso: dado um profissional e uma data, devolve os horários já
+ * ocupados no formato "HH:MM", expandindo cada agendamento pela quantidade
+ * de slots que seus serviços consomem.
+ */
 export default class GetBusySchedules {
   constructor(private readonly repo: CalendarRepository) {}
 
