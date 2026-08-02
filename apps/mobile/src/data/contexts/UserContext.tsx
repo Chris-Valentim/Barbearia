@@ -1,26 +1,25 @@
-'use client'
 import { createContext, useCallback, useEffect, useState } from 'react'
 import { User } from '@barba/contracts'
-import useLocalStorage from '../hooks/useLocalStorage'
+import useStorage from '../hooks/useStorage'
 
 export interface UserContextProps {
   loading: boolean
   user: User | null
   signIn: (user: User) => Promise<void>
-  signOut: () => void
+  signOut: () => Promise<void>
 }
 
 const UserContext = createContext<UserContextProps>({} as any)
 
 export const UserProvider = ({ children }: any) => {
-  const { get, set } = useLocalStorage()
+  const { get, set } = useStorage()
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState<User | null>(null)
 
   const userLoaded = useCallback(
-    function () {
+    async function () {
       try {
-        const userLocal = get('user')
+        const userLocal = await get('user')
         if (userLocal) {
           setUser(userLocal)
         }
@@ -33,15 +32,17 @@ export const UserProvider = ({ children }: any) => {
 
   async function signIn(user: User) {
     setUser(user)
-    set('user', user)
+    await set('user', user)
   }
 
-  function signOut() {
+  async function signOut() {
     setUser(null)
-    set('user', null)
+    await set('user', null)
   }
 
-  useEffect(() => userLoaded(), [userLoaded])
+  useEffect(() => {
+    userLoaded()
+  }, [userLoaded])
 
   return (
     <UserContext.Provider
