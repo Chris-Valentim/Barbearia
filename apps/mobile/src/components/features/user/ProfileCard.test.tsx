@@ -57,6 +57,6 @@ describe('ProfileCard', () => {
 
     fireEvent.press(screen.getByText('SAIR'))
 
-    expect(navigation.replace).toHaveBeenCalledWith('Cadastro')
+    expect(navigation.replace).toHaveBeenCalledWith('Register')
   })
 })

@@ -10,7 +10,7 @@ const Register = ({ navigation }: any) => {
 
   useEffect(() => {
     if (user) {
-      navigation?.replace('Principal')
+      navigation?.replace('Main')
     }
   }, [user])
 
