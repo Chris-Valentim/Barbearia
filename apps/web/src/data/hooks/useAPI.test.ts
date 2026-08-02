@@ -27,8 +27,9 @@ describe('useAPI.httpGet', () => {
     fetchMock.mockResolvedValue(respostaOk(['08:00', '08:15']))
     const { result } = renderHook(() => useAPI())
 
-    expect(await result.current.httpGet('scheduling/occupation/1/2026-08-05'))
-      .toEqual(['08:00', '08:15'])
+    expect(
+      await result.current.httpGet('scheduling/busy/1/2026-08-05'),
+    ).toEqual(['08:00', '08:15'])
   })
 
   it('monta a URL a partir da base de ambiente', async () => {
@@ -45,30 +46,42 @@ describe('useAPI.httpGet', () => {
     jest.spyOn(console, 'error').mockImplementation(() => {})
     const { result } = renderHook(() => useAPI())
 
-    await expect(result.current.httpGet('service')).resolves.toBeUndefined()
+    await expect(result.current.httpGet('service')).resolves.toBeNull()
   })
 
-  // BUG CONHECIDO — httpGet não verifica `res.ok`, então o corpo de um 404 é
-  // devolvido como se fosse dado válido. É o que transforma a rota errada
-  // `/scheduling/busy` no "busySchedules.includes is not a function": o
-  // componente recebe um objeto de erro onde esperava um array.
-  it.failing('não devolve o corpo de uma resposta de erro', async () => {
+  // Regressão do erro "busySchedules.includes is not a function": sem checar
+  // res.ok, o corpo do 404 voltava como dado válido e o componente recebia um
+  // objeto onde esperava um array.
+  it('não devolve o corpo de uma resposta de erro', async () => {
     fetchMock.mockResolvedValue(resposta404())
+    jest.spyOn(console, 'error').mockImplementation(() => {})
     const { result } = renderHook(() => useAPI())
 
     const retorno = await result.current.httpGet('scheduling/busy/1/2026-08-05')
 
-    expect(retorno).not.toHaveProperty('statusCode')
+    // null em vez do corpo do erro — nada de statusCode vazando como dado.
+    expect(retorno).toBeNull()
   })
 
-  it('documenta o comportamento atual: devolve o corpo do 404', async () => {
+  it('devolve algo que o consumidor pode tratar com ?? []', async () => {
     fetchMock.mockResolvedValue(resposta404())
+    jest.spyOn(console, 'error').mockImplementation(() => {})
     const { result } = renderHook(() => useAPI())
 
     const retorno = await result.current.httpGet('scheduling/busy/1/2026-08-05')
 
-    expect(retorno).toHaveProperty('statusCode', 404)
-    expect(Array.isArray(retorno)).toBe(false)
+    // É este contrato que o SchedulingContext assume ao fazer `busy ?? []`.
+    expect(retorno ?? []).toEqual([])
+  })
+
+  it('registra o status recebido ao falhar', async () => {
+    fetchMock.mockResolvedValue(resposta404())
+    const erro = jest.spyOn(console, 'error').mockImplementation(() => {})
+    const { result } = renderHook(() => useAPI())
+
+    await result.current.httpGet('scheduling/busy/1/2026-08-05')
+
+    expect(erro).toHaveBeenCalledWith(expect.stringContaining('404'))
   })
 })
 

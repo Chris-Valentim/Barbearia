@@ -52,9 +52,9 @@ describe('SchedulingController', () => {
     })
   })
 
-  describe('searchOccupationByProfessionalAndDate', () => {
+  describe('searchBusySchedules', () => {
     it('converte o id do profissional de string para número', async () => {
-      await controller.searchOccupationByProfessionalAndDate('7', '2026-08-05')
+      await controller.searchBusySchedules('7', '2026-08-05')
 
       const [idRecebido] = repo.searchByProfessionalAndDate.mock.calls[0]
       expect(idRecebido).toBe(7)
@@ -62,7 +62,7 @@ describe('SchedulingController', () => {
     })
 
     it('converte a data da rota em Date', async () => {
-      await controller.searchOccupationByProfessionalAndDate('1', '2026-08-05')
+      await controller.searchBusySchedules('1', '2026-08-05')
 
       const [, dataRecebida] = repo.searchByProfessionalAndDate.mock.calls[0]
       expect(dataRecebida).toBeInstanceOf(Date)
@@ -70,7 +70,7 @@ describe('SchedulingController', () => {
     })
 
     it('devolve lista vazia quando não há ocupação', async () => {
-      const resultado = await controller.searchOccupationByProfessionalAndDate(
+      const resultado = await controller.searchBusySchedules(
         '1',
         '2026-08-05',
       )
@@ -89,7 +89,7 @@ describe('SchedulingController', () => {
         } as Scheduling,
       ])
 
-      const resultado = await controller.searchOccupationByProfessionalAndDate(
+      const resultado = await controller.searchBusySchedules(
         '1',
         '2026-08-05',
       )

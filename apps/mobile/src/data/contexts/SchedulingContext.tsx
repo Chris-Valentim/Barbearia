@@ -67,7 +67,7 @@ const SchedulingProvider = ({ children }: { children: React.ReactNode }) => {
     if (!user?.email) return
 
     await httpPost('scheduling', {
-      emailClients: user.email,
+      emailClient: user.email,
       date: date!,
       professional: professional!,
       services: services

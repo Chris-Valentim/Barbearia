@@ -17,8 +17,8 @@ export class SchedulingController {
     return this.repo.searchByEmail(email)
   }
 
-  @Get('occupation/:professional/:date')
-  searchOccupationByProfessionalAndDate(
+  @Get('busy/:professional/:date')
+  searchBusySchedules(
     @Param('professional') professional: string,
     @Param('date') dateParams: string,
   ) {
