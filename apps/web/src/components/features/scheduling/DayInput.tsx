@@ -14,7 +14,7 @@ const DayInput = (props: DayInputProps) => {
     const selected = date.getDate() === props.date.getDate()
 
     return (
-      <div onClick={() => props.dateChanged(date)} className={`flex-1 flex flex-col items-center gap-2 py-4 cursor-pointer ${selected ? 'bg-yellow-400 text-black' : 'text-zinc-400'}`}>
+      <div key={date.toISOString()} onClick={() => props.dateChanged(date)} className={`flex-1 flex flex-col items-center gap-2 py-4 cursor-pointer ${selected ? 'bg-yellow-400 text-black' : 'text-zinc-400'}`}>
         <div className='flex items-center gap-1'>
           <span className='text-2xl font-black'>
             {date.getDate()}

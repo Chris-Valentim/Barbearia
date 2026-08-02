@@ -64,16 +64,23 @@ const SchedulesInput = (props: SchedulesInputProps) => {
       }
     }
 
+    // Avaliado uma vez por render: getButtonProps era chamado três vezes,
+    // e dentro do onPress lia o currentTime anterior ao toque.
+    const buttonProps = getButtonProps()
+
     return (
       <Pressable
         key={time}
         onPress={() => {
           setCurrentTime(time)
-          if (getButtonProps().disabled) return props.dateChanged(DateUtils.applySchedule(props.date, time))
+          // A guarda estava invertida: só o horário INDISPONÍVEL disparava a
+          // seleção, e o horário livre não fazia nada.
+          if (busy || blockedPeriod) return
+          props.dateChanged(DateUtils.applySchedule(props.date, time))
         }}
-        style={{ ...styles.hourContainer, backgroundColor: getButtonProps().background }}
+        style={{ ...styles.hourContainer, backgroundColor: buttonProps.background }}
       >
-        {getButtonProps().disabled ? (
+        {buttonProps.disabled ? (
           <View style={styles.hourContent}>
             <Text style={{ color: '#e4e4e7' }}>
               X

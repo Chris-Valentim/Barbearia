@@ -20,4 +20,19 @@ export default class DateUtils {
       day: 'numeric',
     })
   }
+
+  /**
+   * Formata como "YYYY-MM-DD" usando os componentes LOCAIS da data.
+   *
+   * `toISOString().slice(0, 10)` não serve para isto: ele converte para UTC
+   * antes de recortar, então um horário escolhido às 21h em UTC-3 vira o dia
+   * seguinte. Como toda a agenda é apresentada em horário local, o dia enviado
+   * à api precisa ser o dia que o usuário vê na tela.
+   */
+  static toISODate(date: Date): string {
+    const ano = date.getFullYear()
+    const mes = String(date.getMonth() + 1).padStart(2, '0')
+    const dia = String(date.getDate()).padStart(2, '0')
+    return `${ano}-${mes}-${dia}`
+  }
 }

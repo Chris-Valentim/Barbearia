@@ -62,8 +62,14 @@ const Summary = ({ navigation }: any) => {
         <Pressable
           style={styles.button}
           onPress={async () => {
-            await schedule()
-            navigation.navigate('Main')
+            try {
+              await schedule()
+              navigation.navigate('Main')
+            } catch (error) {
+              // Falha na api mantém o usuário no sumário com a seleção
+              // preservada, em vez de navegar como se tivesse dado certo.
+              console.error(error)
+            }
           }}
         >
           <Text style={styles.textButton}>

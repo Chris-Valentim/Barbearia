@@ -39,9 +39,13 @@ export const UserProvider = ({ children }: any) => {
   }
 
   function signOut() {
-    router.push('/')
+    // A ordem importa: limpar a sessão antes de navegar. Com o push primeiro,
+    // o RequireUser da rota privada ainda enxergava o usuário como ausente e
+    // corria para /login?destiny=<rota privada>, e o logout terminava na tela
+    // de login em vez da home.
     setUser(null)
     set('user', null)
+    router.replace('/')
   }
 
   useEffect(() => userLoaded(), [userLoaded])

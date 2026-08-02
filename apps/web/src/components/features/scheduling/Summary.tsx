@@ -14,6 +14,11 @@ const Summary = () => {
       setLoading(true)
       await schedule()
       router.push('/scheduling/success')
+    } catch (error) {
+      // Falha na api mantém o usuário na tela com a seleção preservada, em
+      // vez de mandá-lo para a página de sucesso de um agendamento que não
+      // chegou a existir.
+      console.error(error)
     } finally {
       setLoading(false)
     }

@@ -47,8 +47,11 @@ const SchedulesInput = (props: SchedulesInputProps) => {
         onMouseEnter={(_) => setHourHover(time)}
         onMouseLeave={(_) => setHourHover(null)}
         onClick={() => {
-          if (notSelectable) return
-          if (busy || blockedPeriod) return props.dateChanged(DateUtils.applySchedule(props.date, time))
+          // A guarda estava invertida: um horário livre não satisfazia nenhuma
+          // das condições e o clique não fazia nada, enquanto um horário
+          // ocupado caía no segundo `return` e acabava sendo selecionado.
+          if (notSelectable || busy || blockedPeriod) return
+          props.dateChanged(DateUtils.applySchedule(props.date, time))
         }}
       >
         <span

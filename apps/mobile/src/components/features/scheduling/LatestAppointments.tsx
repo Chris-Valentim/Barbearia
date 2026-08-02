@@ -27,8 +27,10 @@ const LatestAppointments = () => {
           <Text style={styles.subtitle}>
             Aqui estão seus últimos agendamentos:
           </Text>
-          {scheduling
-            ?.reverse()
+          {/* toReversed via cópia: `reverse()` muta o próprio array de estado,
+              então a ordem se invertia de novo a cada re-render. */}
+          {[...(scheduling ?? [])]
+            .reverse()
             .map((a: Scheduling) => <SchedulingItem scheduling={a} key={a.id} />)}
         </View>
       )

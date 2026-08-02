@@ -46,7 +46,7 @@ describe('RequireUser', () => {
       </RequireUser>,
     )
 
-    expect(global.mocksDeNavegacao.push).toHaveBeenCalledTimes(1)
+    expect(global.mocksDeNavegacao.replace).toHaveBeenCalledTimes(1)
     expect(screen.queryByText('Área restrita')).not.toBeInTheDocument()
   })
 
@@ -59,9 +59,72 @@ describe('RequireUser', () => {
       </RequireUser>,
     )
 
-    const [destino] = global.mocksDeNavegacao.push.mock.calls[0]
+    const [destino] = global.mocksDeNavegacao.replace.mock.calls[0]
     expect(destino).toContain('/login')
     expect(destino).toContain('destiny=')
+  })
+
+  // Regressão: router.push era chamado no corpo do componente. Isso é efeito
+  // colateral em fase de render, e reemitia a navegação a cada re-render.
+  it('não navega mais de uma vez em re-renders', () => {
+    mockUseUser.mockReturnValue({ user: null, loading: false })
+
+    const { rerender } = render(
+      <RequireUser>
+        <p>Área restrita</p>
+      </RequireUser>,
+    )
+    rerender(
+      <RequireUser>
+        <p>Área restrita</p>
+      </RequireUser>,
+    )
+    rerender(
+      <RequireUser>
+        <p>Área restrita</p>
+      </RequireUser>,
+    )
+
+    expect(global.mocksDeNavegacao.replace).toHaveBeenCalledTimes(1)
+  })
+
+  it('usa replace para não deixar a rota protegida no histórico', () => {
+    mockUseUser.mockReturnValue({ user: null, loading: false })
+
+    render(
+      <RequireUser>
+        <p>Área restrita</p>
+      </RequireUser>,
+    )
+
+    expect(global.mocksDeNavegacao.push).not.toHaveBeenCalled()
+  })
+
+  it('não navega enquanto a sessão ainda está carregando', () => {
+    mockUseUser.mockReturnValue({ user: null, loading: true })
+
+    render(
+      <RequireUser>
+        <p>Área restrita</p>
+      </RequireUser>,
+    )
+
+    expect(global.mocksDeNavegacao.replace).not.toHaveBeenCalled()
+  })
+
+  it('não navega quando há usuário autenticado', () => {
+    mockUseUser.mockReturnValue({
+      user: { email: 'chris@barba.com', name: 'Christian' },
+      loading: false,
+    })
+
+    render(
+      <RequireUser>
+        <p>Área restrita</p>
+      </RequireUser>,
+    )
+
+    expect(global.mocksDeNavegacao.replace).not.toHaveBeenCalled()
   })
 
   it('avisa que está redirecionando', () => {
