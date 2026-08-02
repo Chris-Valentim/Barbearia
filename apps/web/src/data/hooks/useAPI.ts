@@ -22,31 +22,33 @@ const useAPI = () => {
     }
   }, [])
 
+  /**
+   * Diferente de httpGet, LANÇA quando a requisição falha.
+   *
+   * A api responde 201 com corpo vazio na criação, então o valor de retorno
+   * não serve para distinguir sucesso de falha — `null` significaria as duas
+   * coisas ao mesmo tempo, e todo agendamento bem-sucedido seria reportado
+   * como erro. Uma escrita que falha também não tem fallback razoável, ao
+   * contrário de uma leitura, que pode cair para lista vazia.
+   */
   const httpPost = useCallback(async function (
     uri: string,
     body: any,
   ): Promise<any> {
-    try {
-      const res = await fetch(`${URL_BASE}/${uri}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-      })
+    const res = await fetch(`${URL_BASE}/${uri}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    })
 
-      if (!res.ok) {
-        console.error(`POST ${uri} respondeu ${res.status}`)
-        return null
-      }
-
-      // 201 sem corpo é resposta válida para criação.
-      const texto = await res.text()
-      return texto ? JSON.parse(texto) : null
-    } catch (error) {
-      console.error(error)
-      return null
+    if (!res.ok) {
+      throw new Error(`POST ${uri} respondeu ${res.status}`)
     }
+
+    const texto = await res.text()
+    return texto ? JSON.parse(texto) : null
   }, [])
 
   return { httpGet, httpPost }

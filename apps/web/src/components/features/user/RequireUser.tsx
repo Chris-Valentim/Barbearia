@@ -4,11 +4,14 @@ import { usePathname, useRouter } from 'next/navigation'
 import useUser from '@/data/hooks/useUser'
 
 const RequireUser = (props: any) => {
-  const { loading, user } = useUser()
+  const { loading, user, signingOut } = useUser()
   const path = usePathname()
   const router = useRouter()
 
-  const semSessao = !loading && !user?.email
+  // Durante um logout deliberado a guarda fica desarmada: quem está saindo já
+  // tem para onde ir, e mandá-lo para /login?destiny=<rota privada> devolveria
+  // o usuário exatamente à página de onde ele pediu para sair.
+  const semSessao = !loading && !signingOut && !user?.email
 
   // A navegação precisa acontecer em efeito, não durante o render. Chamar
   // router.push no corpo do componente atualiza o estado do Router enquanto o

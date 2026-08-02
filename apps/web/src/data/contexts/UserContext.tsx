@@ -7,6 +7,8 @@ import useLocalStorage from '../hooks/useLocalStorage'
 export interface UserContextProps {
   loading: boolean
   user: User | null
+  /** Verdadeiro entre o clique em sair e a saída efetiva da rota protegida. */
+  signingOut: boolean
   signIn: (user: User) => Promise<void>
   signOut: () => void
 }
@@ -18,6 +20,7 @@ export const UserProvider = ({ children }: any) => {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState<User | null>(null)
+  const [signingOut, setSigningOut] = useState(false)
 
   const userLoaded = useCallback(
     function () {
@@ -34,15 +37,18 @@ export const UserProvider = ({ children }: any) => {
   )
 
   async function signIn(user: User) {
+    setSigningOut(false)
     setUser(user)
     set('user', user)
   }
 
   function signOut() {
-    // A ordem importa: limpar a sessão antes de navegar. Com o push primeiro,
-    // o RequireUser da rota privada ainda enxergava o usuário como ausente e
-    // corria para /login?destiny=<rota privada>, e o logout terminava na tela
-    // de login em vez da home.
+    // `signingOut` existe para desarmar a guarda de rota durante a saída.
+    // Sem isso, limpar a sessão faz o RequireUser da rota privada disparar seu
+    // próprio redirecionamento para /login?destiny=<rota privada>, que corre
+    // com o replace('/') daqui — e o usuário que pediu para sair terminava
+    // numa tela de login apontando de volta para a página de onde saiu.
+    setSigningOut(true)
     setUser(null)
     set('user', null)
     router.replace('/')
@@ -55,6 +61,7 @@ export const UserProvider = ({ children }: any) => {
       value={{
         loading,
         user,
+        signingOut,
         signIn,
         signOut
       }}

@@ -35,6 +35,20 @@ const SchedulesInput = (props: SchedulesInputProps) => {
     const blockedPeriod = period.includes(time) && period.some((h) => busySchedules.includes(h))
     const busy = busySchedules.includes(time)
 
+    // Se este horário fosse escolhido, quais slots ele tomaria?
+    //
+    // A web responde isso com `period`, que vem do hover — no desktop o
+    // ponteiro já passou pela célula antes do clique. No mobile não existe
+    // hover: `currentTime` só é gravado dentro do próprio onPress, então no
+    // primeiro toque `period` é [] e nada é bloqueado. Sem este cálculo, tocar
+    // num horário livre cujo slot seguinte está ocupado marcava por cima.
+    const periodoDoToque = getPeriod(time, props.numberOfHours)
+    const cabeNoTurno = periodoDoToque.length === props.numberOfHours
+    const conflitaComOcupado = periodoDoToque.some((h) =>
+      busySchedules.includes(h)
+    )
+    const selecionavel = cabeNoTurno && !conflitaComOcupado && !busy
+
     const getButtonProps = () => {
       if (selected && !blockedPeriod && !busy) {
         return {
@@ -46,7 +60,7 @@ const SchedulesInput = (props: SchedulesInputProps) => {
           background: '#ef4444',
           disabled: true,
         }
-      } else if (!thereAreSchedules && !busy && selectedPeriod.includes(time)) {
+      } else if (!thereAreSchedules && !busy && period.includes(time)) {
         return {
           background: '#ef4444',
           disabled: true,
@@ -71,11 +85,12 @@ const SchedulesInput = (props: SchedulesInputProps) => {
     return (
       <Pressable
         key={time}
+        disabled={!selecionavel}
         onPress={() => {
           setCurrentTime(time)
-          // A guarda estava invertida: só o horário INDISPONÍVEL disparava a
-          // seleção, e o horário livre não fazia nada.
-          if (busy || blockedPeriod) return
+          // A guarda decide pelo período do horário TOCADO, não pelo estado do
+          // toque anterior.
+          if (!selecionavel) return
           props.dateChanged(DateUtils.applySchedule(props.date, time))
         }}
         style={{ ...styles.hourContainer, backgroundColor: buttonProps.background }}
