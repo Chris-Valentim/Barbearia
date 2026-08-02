@@ -102,17 +102,11 @@ describe('RepositoryScheduling', () => {
       expect(include).toEqual({ services: true })
     })
 
-    // BUG CONHECIDO — o código usa date.getUTCDay(), que devolve o dia da
-    // SEMANA (0–6), onde deveria usar getUTCDate(), o dia do mês. Com isso a
-    // janela de busca aponta para um dia arbitrário entre 1 e 6.
-    //
-    // Reproduzido em execução real: um agendamento gravado em 05/08/2026 só
-    // é encontrado ao consultar 07/08, porque 07/08 é sexta-feira e
-    // getUTCDay() devolve 5.
-    //
-    // it.failing passa enquanto o bug existir e falha assim que for
-    // corrigido — momento de trocar por it() comum.
-    it.failing('busca no dia do mês solicitado', async () => {
+    // Regressão do bug do getUTCDay(): a função usava o dia da SEMANA (0–6)
+    // como se fosse o dia do mês. Reproduzido em execução real — um
+    // agendamento gravado em 05/08/2026 só era encontrado ao consultar 07/08,
+    // porque 07/08 é sexta-feira e getUTCDay() devolve 5.
+    it('busca no dia do mês solicitado', async () => {
       await repo.searchByProfessionalAndDate(1, new Date(Date.UTC(2026, 7, 5)))
 
       const [{ where }] = prisma.scheduling.findMany.mock.calls[0]
@@ -120,12 +114,45 @@ describe('RepositoryScheduling', () => {
       expect(where.date.lte.getDate()).toBe(5)
     })
 
-    it('documenta o comportamento atual: usa o dia da semana como dia do mês', async () => {
-      // 05/08/2026 é quarta-feira → getUTCDay() = 3
-      await repo.searchByProfessionalAndDate(1, new Date(Date.UTC(2026, 7, 5)))
+    it('funciona com a data no formato que chega da rota', async () => {
+      // O controller faz new Date("2026-08-05"), que é meia-noite UTC.
+      await repo.searchByProfessionalAndDate(1, new Date('2026-08-05'))
 
       const [{ where }] = prisma.scheduling.findMany.mock.calls[0]
-      expect(where.date.gte.getDate()).toBe(3)
+      expect(where.date.gte.getDate()).toBe(5)
+      expect(where.date.gte.getMonth()).toBe(7)
+      expect(where.date.gte.getFullYear()).toBe(2026)
+    })
+
+    it('não erra o ano na virada, mesmo em fuso negativo', async () => {
+      // Com getFullYear() local sobre uma data UTC de 1º de janeiro, o ano
+      // resolvia para o anterior em qualquer fuso a oeste de Greenwich.
+      await repo.searchByProfessionalAndDate(1, new Date('2027-01-01'))
+
+      const [{ where }] = prisma.scheduling.findMany.mock.calls[0]
+      expect(where.date.gte.getFullYear()).toBe(2027)
+      expect(where.date.gte.getMonth()).toBe(0)
+      expect(where.date.gte.getDate()).toBe(1)
+    })
+
+    it('cobre o último milissegundo do dia', async () => {
+      await repo.searchByProfessionalAndDate(1, new Date('2026-08-05'))
+
+      const [{ where }] = prisma.scheduling.findMany.mock.calls[0]
+      expect(where.date.lte.getMilliseconds()).toBe(999)
+    })
+
+    it('cobre todos os dias do mês, não só de 1 a 6', async () => {
+      // getUTCDay() só devolve 0–6, então dias 7 a 31 eram inalcançáveis.
+      for (const dia of [7, 15, 28, 31]) {
+        prisma.scheduling.findMany.mockClear()
+        const iso = `2026-01-${String(dia).padStart(2, '0')}`
+
+        await repo.searchByProfessionalAndDate(1, new Date(iso))
+
+        const [{ where }] = prisma.scheduling.findMany.mock.calls[0]
+        expect(where.date.gte.getDate()).toBe(dia)
+      }
     })
   })
 })
