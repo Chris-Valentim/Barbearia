@@ -66,18 +66,13 @@ const SchedulingProvider = ({ children }: { children: React.ReactNode }) => {
   async function schedule() {
     if (!user?.email) return
 
-    const resultado = await httpPost('scheduling', {
+    // httpPost lanca quando a api rejeita; nao ha valor de retorno a checar.
+    await httpPost('scheduling', {
       emailClient: user.email,
       date: date!,
       professional: professional!,
       services: services
     })
-
-    // httpPost devolve null quando a api rejeita. Limpar o estado aqui faria a
-    // UI declarar sucesso e descartar a escolha do usuário mesmo num 500.
-    if (resultado === null) {
-      throw new Error('Não foi possível concluir o agendamento')
-    }
 
     clean()
   }
