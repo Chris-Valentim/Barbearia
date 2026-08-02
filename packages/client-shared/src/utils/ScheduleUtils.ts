@@ -1,4 +1,4 @@
-export default class UsefulAgenda {
+export default class ScheduleUtils {
   private static minutes = [0, 15, 30, 45]
 
   static timesOfDay() {

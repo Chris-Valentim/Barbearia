@@ -1,7 +1,7 @@
 'use client'
 import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
-import { UsefulPhone } from "@barba/contracts"
+import { PhoneUtils } from "@barba/client-shared"
 import useUser from "@/data/hooks/useUser"
 import Logo from "../shared/Logo"
 import Image from "next/image"
@@ -55,7 +55,7 @@ const UserForm = () => {
             />
             <input
               type="tel"
-              value={UsefulPhone.format(phone)}
+              value={PhoneUtils.format(phone)}
               onChange={(s) => setPhone(s.target.value)}
               placeholder="Telefone"
               className="bg-zinc-900 px-4 py-2 rounded"

@@ -1,7 +1,7 @@
 'use client'
 import { Service } from "@barba/contracts"
 import { useRouter } from 'next/navigation'
-import { useServices } from "@barba/ui"
+import { useServices } from "@barba/client-shared"
 import ItemService from "./ItemService"
 import Title from "../shared/Title"
 

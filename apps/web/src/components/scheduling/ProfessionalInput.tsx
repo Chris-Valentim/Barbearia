@@ -1,4 +1,4 @@
-import { useProfessionals } from "@barba/ui";
+import { useProfessionals } from "@barba/client-shared";
 import { Professional } from "@barba/contracts";
 import Image from "next/image";
 

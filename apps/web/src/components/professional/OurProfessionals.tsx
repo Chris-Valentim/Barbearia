@@ -1,6 +1,6 @@
 'use client'
 import { Professional } from "@barba/contracts"
-import { useProfessionals } from "@barba/ui"
+import { useProfessionals } from "@barba/client-shared"
 import ProfessionalItem from "./ProfessionalItem"
 import Title from "../shared/Title"
 

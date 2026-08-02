@@ -1,4 +1,4 @@
-import { useServices } from '@barba/ui'
+import { useServices } from '@barba/client-shared'
 import { Service } from '@barba/contracts'
 import Image from 'next/image'
 

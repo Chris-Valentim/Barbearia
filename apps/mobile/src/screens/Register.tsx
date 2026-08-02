@@ -1,4 +1,4 @@
-import { UsefulPhone } from "@barba/contracts";
+import { PhoneUtils } from "@barba/client-shared";
 import { StyleSheet, Text, TextInput, Pressable, View, ImageBackground, Image } from "react-native";
 import useUser from "../data/hooks/useUser";
 import { useEffect } from "react";
@@ -63,8 +63,8 @@ const Register = ({ navigation }: any) => {
               style={[styles.input, errors.phone ? styles.inputError : null]}
               placeholder="Digite seu telefone"
               placeholderTextColor="#666"
-              value={UsefulPhone.format(phone)}
-              onChangeText={(tel) => setPhone(UsefulPhone.unformat(tel))}
+              value={PhoneUtils.format(phone)}
+              onChangeText={(tel) => setPhone(PhoneUtils.unformat(tel))}
               keyboardType="phone-pad"
             />
             {errors.phone ? <Text style={styles.errorText}>{errors.phone}</Text> : null}

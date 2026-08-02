@@ -4,4 +4,3 @@ export * from "./service";
 export * from "./user";
 export * from "./scheduling";
 export * from "./fixtures";
-export * from "./utils";
