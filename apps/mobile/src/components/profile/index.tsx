@@ -4,7 +4,7 @@ import useUser from "@/src/data/hooks/useUser";
 import React from "react";
 
 const Profile = ({ navigation }: any) => {
-  const { user, getOut } = useUser()
+  const { user, signOut } = useUser()
 
   return (
     <View style={styles.container}>
@@ -21,7 +21,7 @@ const Profile = ({ navigation }: any) => {
       <Pressable
         style={styles.button}
         onPress={() => {
-          getOut()
+          signOut()
           navigation.replace('Cadastro')
         }}
       >

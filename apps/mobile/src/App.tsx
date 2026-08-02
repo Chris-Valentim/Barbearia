@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { UserTaster } from './data/contexts/UserContext'
+import { UserProvider } from './data/contexts/UserContext'
 import { SchedulingProvider } from './data/contexts/SchedulingContext'
 import { NavigationContainer } from '@react-navigation/native'
 import Register from './screens/Register'
@@ -10,7 +10,7 @@ const Stack = createNativeStackNavigator()
 
 const App = () => {
   return (
-    <UserTaster>
+    <UserProvider>
       <SchedulingProvider>
         <NavigationContainer>
           <Stack.Navigator>
@@ -38,7 +38,7 @@ const App = () => {
           </Stack.Navigator>
         </NavigationContainer>
       </SchedulingProvider>
-    </UserTaster>
+    </UserProvider>
   )
 }
 

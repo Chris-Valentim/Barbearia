@@ -2,7 +2,7 @@ import { useState } from "react";
 import useUser from "./useUser";
 
 const useFormUser = () => {
-  const { singIn } = useUser()
+  const { signIn } = useUser()
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -32,7 +32,7 @@ const useFormUser = () => {
 
   async function register() {
     if (validate()) {
-      await singIn({ name, email, phone })
+      await signIn({ name, email, phone })
     }
   }
 

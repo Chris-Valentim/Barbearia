@@ -11,7 +11,7 @@ const UserForm = () => {
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
 
-  const { user, singIn } = useUser()
+  const { user, signIn } = useUser()
   const params = useSearchParams()
   const router = useRouter()
 
@@ -61,7 +61,7 @@ const UserForm = () => {
               className="bg-zinc-900 px-4 py-2 rounded"
             />
             <div className="flex gap-5">
-              <button onClick={() => singIn({ name, email, phone })} className="button bg-green-600 flex-1">
+              <button onClick={() => signIn({ name, email, phone })} className="button bg-green-600 flex-1">
                 Entrar
               </button>
               <button onClick={() => {

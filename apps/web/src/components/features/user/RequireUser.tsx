@@ -17,7 +17,7 @@ const RequireUser = (props: any) => {
   }
 
   if (!user?.email && loading) return <div>Carregando...</div>
-  if (!user?.email) return redirect(`/singIn?destiny=${path}`)
+  if (!user?.email) return redirect(`/login?destiny=${path}`)
 
   return props.children
 }
