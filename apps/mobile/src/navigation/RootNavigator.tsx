@@ -14,9 +14,9 @@ const RootNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name='Cadastro' component={Register} />
-        <Stack.Screen name='Principal' component={Main} />
-        <Stack.Screen name='Sumario' component={Summary} />
+        <Stack.Screen name='Register' component={Register} />
+        <Stack.Screen name='Main' component={Main} />
+        <Stack.Screen name='Summary' component={Summary} />
       </Stack.Navigator>
     </NavigationContainer>
   )

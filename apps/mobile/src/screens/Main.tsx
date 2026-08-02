@@ -47,7 +47,7 @@ const Main = () => {
     >
       {tab('Home', Home, 'Inicio', 'home-outline')}
       {tab('Scheduling', Scheduling, 'Agendamento', 'calendar-outline')}
-      {tab('User', User, 'Usuário', 'perso-outline')}
+      {tab('User', User, 'Usuário', 'person-outline')}
     </Tab.Navigator>
   )
 }

@@ -13,7 +13,7 @@ const Summary = () => {
     try {
       setLoading(true)
       await schedule()
-      router.push('/scheduling/sucess')
+      router.push('/scheduling/success')
     } finally {
       setLoading(false)
     }

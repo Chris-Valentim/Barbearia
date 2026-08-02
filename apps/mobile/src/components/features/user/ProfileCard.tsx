@@ -22,7 +22,7 @@ const Profile = ({ navigation }: any) => {
         style={styles.button}
         onPress={() => {
           signOut()
-          navigation.replace('Cadastro')
+          navigation.replace('Register')
         }}
       >
         <Text style={styles.textButton}>

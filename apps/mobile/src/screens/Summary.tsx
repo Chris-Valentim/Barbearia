@@ -63,7 +63,7 @@ const Summary = ({ navigation }: any) => {
           style={styles.button}
           onPress={async () => {
             await schedule()
-            navigation.navigate('Start')
+            navigation.navigate('Main')
           }}
         >
           <Text style={styles.textButton}>
