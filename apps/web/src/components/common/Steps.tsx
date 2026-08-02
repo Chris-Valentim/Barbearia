@@ -59,7 +59,11 @@ const Steps = (props: StepsProps) => {
             Anterior
           </span>
         </button>
-        <button onClick={nextSteps} disabled={currentSteps === (props.children?.length ?? 0) - 1 || !props.allowsNextStep}>
+        <button
+          onClick={nextSteps}
+          disabled={currentSteps === (props.children?.length ?? 0) - 1 || !props.allowsNextStep}
+          className="flex gap-1 items-center bg-zinc-700 text-sm text-white px-4 py-1.5 rounded-md disabled:opacity-30"
+        >
           <span>
             Próximo
           </span>
