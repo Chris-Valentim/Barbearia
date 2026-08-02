@@ -6,12 +6,14 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "dev": "tsup src/index.ts --dts --watch",
-    "build": "tsup src/index.ts --dts --minify"
+    "build": "tsup src/index.ts --dts --minify",
+    "check-types": "tsc --noEmit"
   },
   "keywords": [],
   "author": "Christian Valentim",
   "license": "ISC",
   "devDependencies": {
+    "@repo/typescript-config": "*",
     "tsup": "^8.1.2",
     "typescript": "^5.5.3"
   }

@@ -8,6 +8,7 @@
         "ios": "expo start --ios",
         "web": "expo start --web",
         "dev": "expo start --web",
+        "check-types": "tsc --noEmit",
         "test": "jest --watchAll",
         "lint": "expo lint"
     },
@@ -22,7 +23,6 @@
         "@react-navigation/bottom-tabs": "^6.6.1",
         "@react-navigation/native": "^6.0.2",
         "@react-navigation/native-stack": "^6.10.1",
-        "@types/react": "^18.3.3",
         "expo": "~51.0.21",
         "expo-constants": "~16.0.2",
         "expo-font": "~12.0.9",
