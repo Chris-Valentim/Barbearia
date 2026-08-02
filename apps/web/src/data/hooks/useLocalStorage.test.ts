@@ -28,10 +28,10 @@ describe('useLocalStorage.get', () => {
 describe('useLocalStorage.set', () => {
   beforeEach(() => window.localStorage.clear())
 
-  // BUG CONHECIDO — a implementação faz `setItem(value, JSON.stringify(key))`,
-  // invertendo chave e valor. O dado é gravado sob uma chave que é o próprio
-  // conteúdo, e `get` nunca o encontra de volta.
-  it.failing('grava sob a chave informada', () => {
+  // Regressão: a implementação fazia `setItem(value, JSON.stringify(key))`,
+  // gravando sob uma chave que era o próprio conteúdo. Nada do que era
+  // gravado podia ser lido de volta — a sessão se perdia a cada reload.
+  it('grava sob a chave informada', () => {
     const { result } = renderHook(() => useLocalStorage())
 
     result.current.set('user', { name: 'Christian' })
@@ -41,7 +41,7 @@ describe('useLocalStorage.set', () => {
     )
   })
 
-  it.failing('permite ler de volta o que foi gravado', () => {
+  it('permite ler de volta o que foi gravado', () => {
     const { result } = renderHook(() => useLocalStorage())
 
     result.current.set('user', { name: 'Christian' })
@@ -49,13 +49,42 @@ describe('useLocalStorage.set', () => {
     expect(result.current.get('user')).toEqual({ name: 'Christian' })
   })
 
-  it('documenta o comportamento atual: chave e valor trocados', () => {
+  it('não cria chave com o conteúdo do valor', () => {
     const { result } = renderHook(() => useLocalStorage())
 
     result.current.set('user', 'christian')
 
-    // Grava sob a chave "christian" o valor "\"user\"" — exatamente o inverso.
-    expect(window.localStorage.getItem('christian')).toBe('"user"')
-    expect(window.localStorage.getItem('user')).toBeNull()
+    expect(window.localStorage.getItem('christian')).toBeNull()
+    expect(result.current.get('user')).toBe('christian')
+  })
+
+  it('sobrescreve o valor anterior da mesma chave', () => {
+    const { result } = renderHook(() => useLocalStorage())
+
+    result.current.set('user', { name: 'Primeiro' })
+    result.current.set('user', { name: 'Segundo' })
+
+    expect(result.current.get('user')).toEqual({ name: 'Segundo' })
+  })
+
+  it('faz ida e volta de null sem quebrar', () => {
+    const { result } = renderHook(() => useLocalStorage())
+
+    result.current.set('user', { name: 'Christian' })
+    result.current.set('user', null)
+
+    expect(result.current.get('user')).toBeNull()
+  })
+})
+
+describe('useLocalStorage — robustez', () => {
+  beforeEach(() => window.localStorage.clear())
+
+  it('devolve null quando o conteúdo guardado não é JSON válido', () => {
+    window.localStorage.setItem('user', '{corrompido')
+    jest.spyOn(console, 'error').mockImplementation(() => {})
+    const { result } = renderHook(() => useLocalStorage())
+
+    expect(result.current.get('user')).toBeNull()
   })
 })
