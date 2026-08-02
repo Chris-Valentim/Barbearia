@@ -88,7 +88,11 @@ const Steps = (props: StepsProps) => {
           justifyContent: 'center'
         }}
       >
-        {renderButton('Anterior', currentSteps === 0, previousStep)}
+        {/* renderButton recebe `enable`, não `disabled`: a condição precisa ser
+            "há passo anterior", não "estou no primeiro". Invertida, o botão só
+            funcionava no passo 0 — onde levava currentSteps a -1 e deixava a
+            tela em branco — e ficava morto justamente onde era necessário. */}
+        {renderButton('Anterior', currentSteps > 0, previousStep)}
         {renderButton(
           'Próximo',
           props.allowsNextStep,
