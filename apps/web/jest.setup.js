@@ -5,8 +5,14 @@ require('@testing-library/jest-dom')
 const push = jest.fn()
 const replace = jest.fn()
 
+// O objeto do router é criado UMA vez, não a cada chamada: o useRouter real do
+// Next devolve sempre a mesma instância, e um dublê que devolvesse um objeto
+// novo por render faria qualquer useEffect que dependa de `router` reexecutar
+// sem parar — um falso positivo que não existe em produção.
+const router = { push, replace, back: jest.fn(), refresh: jest.fn() }
+
 jest.mock('next/navigation', () => ({
-  useRouter: () => ({ push, replace, back: jest.fn(), refresh: jest.fn() }),
+  useRouter: () => router,
   usePathname: () => '/',
   useSearchParams: () => new URLSearchParams(),
 }))

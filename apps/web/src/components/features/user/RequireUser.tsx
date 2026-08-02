@@ -1,23 +1,42 @@
 'use client'
-import { usePathname, useRouter } from "next/navigation"
-import useUser from "@/data/hooks/useUser"
+import { useEffect } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import useUser from '@/data/hooks/useUser'
 
 const RequireUser = (props: any) => {
   const { loading, user } = useUser()
   const path = usePathname()
   const router = useRouter()
 
-  function redirect(url: string) {
-    router.push(url)
+  const semSessao = !loading && !user?.email
+
+  // A navegação precisa acontecer em efeito, não durante o render. Chamar
+  // router.push no corpo do componente atualiza o estado do Router enquanto o
+  // React ainda está renderizando, e o push era reemitido a cada re-render em
+  // que a sessão continuasse vazia — o UserProvider recria o objeto de value a
+  // cada render, então isso acontecia de fato.
+  useEffect(() => {
+    if (!semSessao) return
+    // replace, e não push: o histórico não deve guardar a rota protegida que
+    // o usuário não chegou a ver.
+    router.replace(`/login?destiny=${encodeURIComponent(path)}`)
+  }, [semSessao, path, router])
+
+  if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        Direcionando...
+      <div className='flex justify-center items-center h-screen'>
+        Carregando...
       </div>
     )
   }
 
-  if (!user?.email && loading) return <div>Carregando...</div>
-  if (!user?.email) return redirect(`/login?destiny=${path}`)
+  if (semSessao) {
+    return (
+      <div className='flex justify-center items-center h-screen'>
+        Direcionando...
+      </div>
+    )
+  }
 
   return props.children
 }
