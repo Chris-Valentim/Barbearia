@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { SchedulingController } from './scheduling.controller'
 import { RepositoryScheduling } from "./scheduling.repository";
-import { DbModule } from "src/db/db.module";
+import { DbModule } from "../db/db.module";
 
 @Module({
   imports: [DbModule],

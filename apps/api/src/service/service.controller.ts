@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
-import { PrismaService } from 'src/db/prisma.service';
+import { PrismaService } from '../db/prisma.service';
 
 @Controller('service')
 export class ServiceController {
