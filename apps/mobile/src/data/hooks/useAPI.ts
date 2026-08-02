@@ -1,6 +1,9 @@
 import { useCallback } from 'react'
 
-const URL_BASE = process.env.NEXT_PUBLIC_URL_BASE
+// O Expo só injeta no bundle variáveis com o prefixo EXPO_PUBLIC_.
+// NEXT_PUBLIC_ é do Next e chegava aqui sempre como undefined, fazendo toda
+// requisição sair para "undefined/scheduling".
+const URL_BASE = process.env.EXPO_PUBLIC_URL_BASE
 
 const useAPI = () => {
   const httpGet = useCallback(async function (uri: string): Promise<any> {
