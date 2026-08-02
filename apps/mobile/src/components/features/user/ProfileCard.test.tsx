@@ -1,7 +1,13 @@
-import { render, screen, fireEvent } from '@testing-library/react-native'
+import {
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+} from '@testing-library/react-native'
 import ProfileCard from './ProfileCard'
 
-const signOut = jest.fn()
+// signOut grava no AsyncStorage, então devolve Promise.
+const signOut = jest.fn().mockResolvedValue(undefined)
 const mockUseUser = jest.fn()
 
 jest.mock('../../../data/hooks/useUser', () => ({
@@ -13,8 +19,8 @@ const navigation = { replace: jest.fn(), navigate: jest.fn() }
 
 describe('ProfileCard', () => {
   beforeEach(() => {
-    signOut.mockClear()
-    navigation.replace.mockClear()
+    signOut.mockReset().mockResolvedValue(undefined)
+    navigation.replace.mockReset()
     mockUseUser.mockReturnValue({
       user: {
         name: 'Christian',
@@ -52,11 +58,30 @@ describe('ProfileCard', () => {
     expect(signOut).toHaveBeenCalledTimes(1)
   })
 
-  it('volta para o cadastro após sair', () => {
+  it('volta para o cadastro após sair', async () => {
     render(<ProfileCard navigation={navigation} />)
 
     fireEvent.press(screen.getByText('SAIR'))
 
-    expect(navigation.replace).toHaveBeenCalledWith('Register')
+    await waitFor(() =>
+      expect(navigation.replace).toHaveBeenCalledWith('Register'),
+    )
+  })
+
+  // Regressão: signOut virou assíncrono ao passar a usar AsyncStorage. Sem
+  // await, a navegação acontecia antes de a sessão sair do disco.
+  it('só navega depois que a sessão foi limpa', async () => {
+    const ordem: string[] = []
+    signOut.mockImplementation(async () => {
+      ordem.push('signOut')
+    })
+    navigation.replace.mockImplementation(() => {
+      ordem.push('replace')
+    })
+    render(<ProfileCard navigation={navigation} />)
+
+    fireEvent.press(screen.getByText('SAIR'))
+
+    await waitFor(() => expect(ordem).toEqual(['signOut', 'replace']))
   })
 })

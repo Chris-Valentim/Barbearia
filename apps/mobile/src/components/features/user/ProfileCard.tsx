@@ -20,8 +20,11 @@ const Profile = ({ navigation }: any) => {
       </Text>
       <Pressable
         style={styles.button}
-        onPress={() => {
-          signOut()
+        onPress={async () => {
+          // signOut escreve no AsyncStorage; sem await, a navegação acontece
+          // antes de a sessão sair do disco e um cold start logo em seguida
+          // ainda encontraria o usuário gravado.
+          await signOut()
           navigation.replace('Register')
         }}
       >
