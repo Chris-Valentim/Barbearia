@@ -57,6 +57,39 @@ describe('DateUtils.applySchedule', () => {
   })
 })
 
+describe('DateUtils.toISODate', () => {
+  it('formata como YYYY-MM-DD', () => {
+    expect(DateUtils.toISODate(new Date(2026, 7, 5))).toBe('2026-08-05')
+  })
+
+  it('preenche mês e dia com zero à esquerda', () => {
+    expect(DateUtils.toISODate(new Date(2026, 0, 9))).toBe('2026-01-09')
+  })
+
+  // Regressão: o contexto usava toISOString().slice(0,10), que converte para
+  // UTC antes de recortar. Um horário escolhido às 21h em UTC-3 virava o dia
+  // seguinte, e a agenda consultava a ocupação do dia errado.
+  it('usa o dia local mesmo em horário tardio', () => {
+    expect(DateUtils.toISODate(new Date(2026, 7, 5, 21, 0))).toBe('2026-08-05')
+    expect(DateUtils.toISODate(new Date(2026, 7, 5, 23, 59))).toBe('2026-08-05')
+  })
+
+  it('usa o dia local mesmo em horário bem cedo', () => {
+    expect(DateUtils.toISODate(new Date(2026, 7, 5, 0, 1))).toBe('2026-08-05')
+  })
+
+  it('não muda o dia na virada de ano', () => {
+    expect(DateUtils.toISODate(new Date(2026, 11, 31, 22, 0))).toBe('2026-12-31')
+  })
+
+  it('corresponde ao dia que formatDate apresenta ao usuário', () => {
+    const data = new Date(2026, 7, 5, 21, 30)
+
+    expect(DateUtils.toISODate(data)).toContain('05')
+    expect(DateUtils.formatDate(data)).toContain('5')
+  })
+})
+
 describe('DateUtils.formatDate', () => {
   it('formata por extenso em pt-BR', () => {
     // 5 de agosto de 2026 é uma quarta-feira
