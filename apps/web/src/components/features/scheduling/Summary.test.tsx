@@ -92,10 +92,9 @@ describe('Summary — agendamento completo', () => {
     expect(schedule).toHaveBeenCalledTimes(1)
   })
 
-  // BUG CONHECIDO — o push é para '/scheduling/sucess' (um "c"), enquanto a
-  // rota existente é '/scheduling/success'. O usuário conclui o agendamento e
-  // cai num 404.
-  it.failing('leva para a página de sucesso após agendar', async () => {
+  // Regressão: o push ia para '/scheduling/sucess', com um "c" a menos que a
+  // rota real. O usuário confirmava o agendamento e caía num 404.
+  it('leva para a página de sucesso após agendar', async () => {
     render(<Summary />)
 
     await userEvent.click(
@@ -107,16 +106,21 @@ describe('Summary — agendamento completo', () => {
     )
   })
 
-  it('documenta o comportamento atual: navega para a rota com typo', async () => {
+  it('agenda antes de navegar', async () => {
+    const ordem: string[] = []
+    schedule.mockImplementation(async () => {
+      ordem.push('schedule')
+    })
+    global.mocksDeNavegacao.push.mockImplementation(() => {
+      ordem.push('push')
+    })
     render(<Summary />)
 
     await userEvent.click(
       screen.getByRole('button', { name: /finalizar agendamento/i }),
     )
 
-    expect(global.mocksDeNavegacao.push).toHaveBeenCalledWith(
-      '/scheduling/sucess',
-    )
+    expect(ordem).toEqual(['schedule', 'push'])
   })
 })
 
