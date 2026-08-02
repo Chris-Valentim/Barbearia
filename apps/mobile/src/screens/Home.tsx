@@ -1,5 +1,5 @@
 import { ImageBackground, SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import LatestAppointments from '../components/scheduling/LatestAppointments'
+import LatestAppointments from '../components/features/scheduling/LatestAppointments'
 
 const Home = () => {
   return (

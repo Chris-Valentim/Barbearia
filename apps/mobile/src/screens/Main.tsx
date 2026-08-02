@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import Home from './Home'
 import Scheduling from './Scheduling'
 import User from './User'
-import Icon from '../components/shared/Icon'
+import Icon from '../components/common/Icon'
 
 const Tab = createBottomTabNavigator()
 
