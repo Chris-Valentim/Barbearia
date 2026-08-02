@@ -94,3 +94,39 @@ describe('Steps', () => {
     expect(allowsNextStepChanged).toHaveBeenLastCalledWith(true)
   })
 })
+
+describe('Steps — aparência dos botões', () => {
+  // Regressão: o botão "Próximo" não tinha className nenhum, então o SVG do
+  // ícone — que é display:block — caía para a linha de baixo do rótulo.
+  it('alinha rótulo e ícone na mesma linha nos dois botões', () => {
+    renderSteps()
+
+    const anterior = screen.getByRole('button', { name: /anterior/i })
+    const proximo = screen.getByRole('button', { name: /próximo/i })
+
+    for (const botao of [anterior, proximo]) {
+      expect(botao).toHaveClass('flex')
+      expect(botao).toHaveClass('items-center')
+    }
+  })
+
+  it('dá aos dois botões o mesmo tratamento visual', () => {
+    renderSteps()
+
+    const anterior = screen.getByRole('button', { name: /anterior/i })
+    const proximo = screen.getByRole('button', { name: /próximo/i })
+
+    for (const classe of ['gap-1', 'bg-zinc-700', 'rounded-md', 'px-4']) {
+      expect(anterior).toHaveClass(classe)
+      expect(proximo).toHaveClass(classe)
+    }
+  })
+
+  it('esmaece o botão desabilitado', () => {
+    renderSteps({ allowsNextStep: false })
+
+    expect(screen.getByRole('button', { name: /próximo/i })).toHaveClass(
+      'disabled:opacity-30',
+    )
+  })
+})
