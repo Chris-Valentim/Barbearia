@@ -35,6 +35,12 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
+# Banco SQLite local — criado por `prisma migrate dev`, nunca versionado.
+# As migrations em prisma/migrations/ SÃO versionadas: são elas que permitem
+# recriar o schema em outra máquina ou no CI.
+*.db
+*.db-journal
+
 # dotenv environment variable files
 .env
 .env.development.local
