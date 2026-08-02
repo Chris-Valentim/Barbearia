@@ -5,7 +5,21 @@ const fetchMock = jest.fn()
 global.fetch = fetchMock as unknown as typeof fetch
 
 function respostaOk(body: unknown) {
-  return { ok: true, status: 200, json: async () => body }
+  return {
+    ok: true,
+    status: 200,
+    json: async () => body,
+    text: async () => JSON.stringify(body),
+  }
+}
+
+/** A api responde assim ao criar um agendamento: 201 e nenhum corpo. */
+function resposta201SemCorpo() {
+  return { ok: true, status: 201, text: async () => '' }
+}
+
+function resposta500() {
+  return { ok: false, status: 500, text: async () => '' }
 }
 
 function resposta404() {
@@ -117,5 +131,46 @@ describe('useAPI.httpPost', () => {
     expect(JSON.parse(fetchMock.mock.calls[0][1].body)).toEqual({
       emailClient: 'a@b.com',
     })
+  })
+})
+
+describe('useAPI.httpPost — sucesso e falha precisam ser distinguíveis', () => {
+  beforeEach(() => fetchMock.mockReset())
+
+  // Regressão: httpPost devolvia null tanto em erro quanto em 201 sem corpo.
+  // Como a api responde exatamente assim ao criar um agendamento, schedule()
+  // tratava TODO agendamento bem-sucedido como falha.
+  it('não lança quando a api responde 201 sem corpo', async () => {
+    fetchMock.mockResolvedValue(resposta201SemCorpo())
+    const { result } = renderHook(() => useAPI())
+
+    await expect(
+      result.current.httpPost('scheduling', {}),
+    ).resolves.not.toThrow()
+  })
+
+  it('lança quando a api rejeita', async () => {
+    fetchMock.mockResolvedValue(resposta500())
+    const { result } = renderHook(() => useAPI())
+
+    await expect(result.current.httpPost('scheduling', {})).rejects.toThrow(
+      /500/,
+    )
+  })
+
+  it('propaga falha de rede em vez de engolir', async () => {
+    fetchMock.mockRejectedValue(new Error('rede indisponível'))
+    const { result } = renderHook(() => useAPI())
+
+    await expect(result.current.httpPost('scheduling', {})).rejects.toThrow(
+      'rede indisponível',
+    )
+  })
+
+  it('devolve o corpo quando a api responde com um', async () => {
+    fetchMock.mockResolvedValue(respostaOk({ id: 7 }))
+    const { result } = renderHook(() => useAPI())
+
+    expect(await result.current.httpPost('scheduling', {})).toEqual({ id: 7 })
   })
 })
