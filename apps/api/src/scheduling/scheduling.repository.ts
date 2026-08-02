@@ -42,12 +42,16 @@ export class RepositoryScheduling implements CalendarRepository {
     professional: number,
     date: Date,
   ): Promise<Scheduling[]> {
-    const year = date.getFullYear()
+    // A data chega da rota como "YYYY-MM-DD", que o construtor de Date
+    // interpreta como meia-noite UTC. Os três componentes precisam ser lidos
+    // em UTC — misturar getFullYear() local com getUTCMonth() faz a virada de
+    // ano cair no ano errado em qualquer fuso negativo.
+    const year = date.getUTCFullYear()
     const month = date.getUTCMonth()
-    const day = date.getUTCDay()
+    const day = date.getUTCDate()
 
-    const startDay = new Date(year, month, day, 0, 0, 0)
-    const endDay = new Date(year, month, day, 23, 59, 59)
+    const startDay = new Date(year, month, day, 0, 0, 0, 0)
+    const endDay = new Date(year, month, day, 23, 59, 59, 999)
 
     const result: any = await this.prismaService.scheduling.findMany({
       where: {
