@@ -1,6 +1,6 @@
 'use client'
 import { Suspense } from "react"
-import UserForm from "@/components/user/UserForm"
+import UserForm from '@/components/features/user/UserForm'
 
 const Page = () => {
   return (

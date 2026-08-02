@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link'
-import TopMenu from '../shared/TopMenu'
+import TopMenu from '@/components/layout/TopMenu'
 
 const TitleSlogan = () => {
   return (

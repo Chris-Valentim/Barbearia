@@ -6,7 +6,7 @@ import {
 } from '@tabler/icons-react'
 import { Professional } from '@barba/contracts'
 import Image from 'next/image'
-import Assessment from '../shared/Assessment'
+import Assessment from '@/components/common/Assessment'
 
 export interface ProfessionalItemProps {
   professional: Professional

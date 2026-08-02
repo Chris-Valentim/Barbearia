@@ -1,5 +1,5 @@
-import DayInput from './DayInput'
-import SchedulesInput from './SchedulesInput'
+import DayInput from '@/components/features/scheduling/DayInput'
+import SchedulesInput from '@/components/features/scheduling/SchedulesInput'
 
 export interface DateInputProps {
   date: Date

@@ -1,8 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import Logo from './Logo'
-import UserMenu from './UserMenu'
+import Logo from '@/components/common/Logo'
+import UserMenu from '@/components/layout/UserMenu'
 import useUser from '@/data/hooks/useUser'
 
 const TopMenu = () => {

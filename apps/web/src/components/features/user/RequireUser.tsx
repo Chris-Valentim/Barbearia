@@ -2,7 +2,7 @@
 import { usePathname, useRouter } from "next/navigation"
 import useUser from "@/data/hooks/useUser"
 
-const UserForce = (props: any) => {
+const RequireUser = (props: any) => {
   const { loading, user } = useUser()
   const path = usePathname()
   const router = useRouter()
@@ -22,4 +22,4 @@ const UserForce = (props: any) => {
   return props.children
 }
 
-export default UserForce
+export default RequireUser

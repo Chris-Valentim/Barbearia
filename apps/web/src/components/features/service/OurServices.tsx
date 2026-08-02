@@ -2,8 +2,8 @@
 import { Service } from "@barba/contracts"
 import { useRouter } from 'next/navigation'
 import { useServices } from "@barba/client-shared"
-import ItemService from "./ItemService"
-import Title from "../shared/Title"
+import ItemService from '@/components/features/service/ItemService'
+import Title from '@/components/common/Title'
 
 const OurServices = () => {
   const router = useRouter()

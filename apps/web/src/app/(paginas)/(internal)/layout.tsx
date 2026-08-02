@@ -1,17 +1,17 @@
 'use client'
 import { SchedulingProvider } from '@/data/contexts/SchedulingContext'
-import UserForce from '@/components/shared/UserForce'
-import Page from '@/components/shared/Page'
+import RequireUser from '@/components/features/user/RequireUser'
+import Page from '@/components/layout/Page'
 
 const Layout = (props: any) => {
   return (
-    <UserForce>
+    <RequireUser>
       <SchedulingProvider>
         <Page>
           {props.children}
         </Page>
       </SchedulingProvider>
-    </UserForce>
+    </RequireUser>
   )
 }
 

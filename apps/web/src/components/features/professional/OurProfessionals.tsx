@@ -1,8 +1,8 @@
 'use client'
 import { Professional } from "@barba/contracts"
 import { useProfessionals } from "@barba/client-shared"
-import ProfessionalItem from "./ProfessionalItem"
-import Title from "../shared/Title"
+import ProfessionalItem from '@/components/features/professional/ProfessionalItem'
+import Title from '@/components/common/Title'
 
 const OurProfessionals = () => {
   const { professionals } = useProfessionals()

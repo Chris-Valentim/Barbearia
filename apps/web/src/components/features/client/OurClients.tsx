@@ -1,7 +1,7 @@
 import { clients } from '@barba/contracts'
-import { LayoutGrid } from '../ui/layout-grid'
-import CustomerItem from './CustomerItem'
-import Title from '@/components/shared/Title'
+import { LayoutGrid } from '@/components/ui/layout-grid'
+import CustomerItem from '@/components/features/client/CustomerItem'
+import Title from '@/components/common/Title'
 
 const OurClients = () => {
   const classes = ['md:col-span-2', 'col-span-1', 'col-span-1', 'md:col-span-2']

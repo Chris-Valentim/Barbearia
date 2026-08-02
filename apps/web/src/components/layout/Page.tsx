@@ -1,4 +1,4 @@
-import Footer from './Footer'
+import Footer from '@/components/layout/Footer'
 
 export interface PageProps {
   children: React.ReactNode

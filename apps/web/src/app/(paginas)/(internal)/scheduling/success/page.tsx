@@ -1,6 +1,6 @@
 'use client'
-import ScheduledSuccessfully from '@/components/scheduling/ScheduledSuccessfully'
-import Header from '@/components/shared/Header'
+import ScheduledSuccessfully from '@/components/features/scheduling/ScheduledSuccessfully'
+import Header from '@/components/layout/Header'
 
 const PageSchedule = () => {
   return (

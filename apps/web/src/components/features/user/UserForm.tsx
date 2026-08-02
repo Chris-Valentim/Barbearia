@@ -3,7 +3,7 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import { PhoneUtils } from "@barba/client-shared"
 import useUser from "@/data/hooks/useUser"
-import Logo from "../shared/Logo"
+import Logo from '@/components/common/Logo'
 import Image from "next/image"
 
 const UserForm = () => {

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import TopMenu from "@/components/shared/TopMenu";
+import TopMenu from '@/components/layout/TopMenu';
 
 export interface HeaderProps {
   title: string

@@ -2,12 +2,12 @@
 import { useState } from 'react'
 import { Professional, Service } from '@barba/contracts'
 import useScheduling from '@/data/hooks/useScheduling'
-import Summary from '@/components/scheduling/Summary'
-import ServicesInput from '@/components/scheduling/ServicesInput'
-import ProfessionalInput from '@/components/scheduling/ProfessionalInput'
-import Steps from '@/components/shared/Steps'
-import DateInput from '@/components/scheduling/DateInput'
-import Header from '@/components/shared/Header'
+import Summary from '@/components/features/scheduling/Summary'
+import ServicesInput from '@/components/features/scheduling/ServicesInput'
+import ProfessionalInput from '@/components/features/scheduling/ProfessionalInput'
+import Steps from '@/components/common/Steps'
+import DateInput from '@/components/features/scheduling/DateInput'
+import Header from '@/components/layout/Header'
 
 const PageScheduling = () => {
   const [allowsNextStep, setAllowsNextStep] = useState<boolean>(false)

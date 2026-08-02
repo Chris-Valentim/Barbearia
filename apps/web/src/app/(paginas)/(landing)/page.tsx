@@ -1,10 +1,10 @@
 'use client'
 
-import OurClients from "@/components/client/OurClients"
-import TitleSlogan from "@/components/landing/TitleSlogan"
-import OurProfessionals from '@/components/professional/OurProfessionals'
-import OurServices from "@/components/service/OurServices"
-import ContainerWithBackground from "@/components/shared/ContainerWithBackground"
+import OurClients from '@/components/features/client/OurClients'
+import TitleSlogan from '@/components/features/landing/TitleSlogan'
+import OurProfessionals from '@/components/features/professional/OurProfessionals'
+import OurServices from '@/components/features/service/OurServices'
+import ContainerWithBackground from '@/components/common/ContainerWithBackground'
 
 const Landing = () => {
   return (
