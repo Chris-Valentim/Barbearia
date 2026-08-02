@@ -1,4 +1,4 @@
-import { UsefulAgenda, UsefulDate } from "@barba/core";
+import { ScheduleUtils, DateUtils } from "@barba/client-shared";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import useScheduling from '../../data/hooks/useScheduling'
@@ -12,7 +12,7 @@ interface SchedulesInputProps {
 const SchedulesInput = (props: SchedulesInputProps) => {
   const [currentTime, setCurrentTime] = useState<string | null>(null)
   const { busySchedules } = useScheduling()
-  const { morning, afternoon, night } = UsefulAgenda.timesOfDay()
+  const { morning, afternoon, night } = ScheduleUtils.timesOfDay()
 
   const selectedHour = props.date.toLocaleTimeString('pt-BR', {
     hour: '2-digit',
@@ -69,7 +69,7 @@ const SchedulesInput = (props: SchedulesInputProps) => {
         key={time}
         onPress={() => {
           setCurrentTime(time)
-          if (getButtonProps().disabled) return props.dateChanged(UsefulDate.applySchedule(props.date, time))
+          if (getButtonProps().disabled) return props.dateChanged(DateUtils.applySchedule(props.date, time))
         }}
         style={{ ...styles.hourContainer, backgroundColor: getButtonProps().background }}
       >

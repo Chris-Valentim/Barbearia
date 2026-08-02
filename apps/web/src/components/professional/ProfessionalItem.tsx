@@ -4,7 +4,7 @@ import {
   IconBrandX,
   IconBrandLinkedin,
 } from '@tabler/icons-react'
-import { Professional } from '@barba/core'
+import { Professional } from '@barba/contracts'
 import Image from 'next/image'
 import Assessment from '../shared/Assessment'
 

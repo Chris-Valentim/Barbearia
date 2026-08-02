@@ -1,4 +1,4 @@
-import { Scheduling } from '@barba/core'
+import { Scheduling } from '@barba/contracts'
 import { StyleSheet, Text, View } from 'react-native'
 
 interface SchedulingItemProps {

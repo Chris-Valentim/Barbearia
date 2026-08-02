@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { Professional, Service } from '@barba/core'
+import { Professional, Service } from '@barba/contracts'
 import useScheduling from '@/data/hooks/useScheduling'
 import Summary from '@/components/scheduling/Summary'
 import ServicesInput from '@/components/scheduling/ServicesInput'

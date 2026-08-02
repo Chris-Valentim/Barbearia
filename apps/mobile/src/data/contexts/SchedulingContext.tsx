@@ -1,6 +1,6 @@
 import { createContext, useCallback, useEffect, useState } from 'react'
-import { Professional, Service } from '@barba/core'
-import { UsefulDate } from '@barba/core'
+import { Professional, Service } from '@barba/contracts'
+import { DateUtils } from '@barba/client-shared'
 import useUser from '../hooks/useUser'
 import useAPI from '../hooks/useAPI'
 
@@ -23,7 +23,7 @@ const SchedulingContext = createContext({} as SchedulingContextProps)
 const SchedulingProvider = ({ children }: { children: React.ReactNode }) => {
   const [professional, setProfessional] = useState<Professional | null>(null)
   const [services, setServices] = useState<Service[]>([])
-  const [date, setDate] = useState<Date>(UsefulDate.today())
+  const [date, setDate] = useState<Date>(DateUtils.today())
 
   const { user } = useUser()
   const [busySchedules, setBusySchedules] = useState<string[]>([])
@@ -77,7 +77,7 @@ const SchedulingProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   function clean() {
-    setDate(UsefulDate.today())
+    setDate(DateUtils.today())
     setBusySchedules([])
     setProfessional(null)
     setServices([])

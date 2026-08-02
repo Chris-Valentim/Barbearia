@@ -1,4 +1,4 @@
-import { professionals } from '@barba/core'
+import { professionals } from '@barba/contracts'
 
 export default function useProfessionals() {
     return {

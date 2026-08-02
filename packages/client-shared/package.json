@@ -1,0 +1,21 @@
+{
+  "name": "@barba/client-shared",
+  "version": "1.0.0",
+  "description": "Utilitários e hooks compartilhados entre os clientes web e mobile",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "lint": "eslint . --max-warnings 0"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "@types/react": "^18.2.61",
+    "eslint": "^8.57.0",
+    "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "@barba/contracts": "*"
+  }
+}

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, Pressable, View } from "react-native";
-import { UsefulDate } from "@barba/core";
+import { DateUtils } from "@barba/client-shared";
 import useScheduling from "../data/hooks/useScheduling";
 
 const Summary = ({ navigation }: any) => {
@@ -49,7 +49,7 @@ const Summary = ({ navigation }: any) => {
           HORÁRIOS
         </Text>
         <Text style={styles.value}>
-          {date && UsefulDate.formatDate(date)}
+          {date && DateUtils.formatDate(date)}
         </Text>
 
         <Text style={styles.totalLabelValue}>

@@ -1,4 +1,4 @@
-import { UsefulPhone } from "@barba/core";
+import { PhoneUtils } from "@barba/client-shared";
 import { StyleSheet, View, Image, Text, Pressable } from "react-native";
 import useUser from "@/src/data/hooks/useUser";
 import React from "react";
@@ -16,7 +16,7 @@ const Profile = ({ navigation }: any) => {
         E-mail: {user?.email.toLowerCase()}
       </Text>
       <Text style={styles.text}>
-        Telefone: {UsefulPhone.format(user?.phone!)}
+        Telefone: {PhoneUtils.format(user?.phone!)}
       </Text>
       <Pressable
         style={styles.button}

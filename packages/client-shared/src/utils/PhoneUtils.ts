@@ -1,4 +1,4 @@
-export default class UsefulPhone {
+export default class PhoneUtils {
   static format(phone: string): string {
     if(!phone) return ''
     const numbers = this.unformat(phone)

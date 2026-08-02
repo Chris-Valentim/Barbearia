@@ -1,4 +1,4 @@
-import { clients } from '@barba/core'
+import { clients } from '@barba/contracts'
 import { LayoutGrid } from '../ui/layout-grid'
 import CustomerItem from './CustomerItem'
 import Title from '@/components/shared/Title'

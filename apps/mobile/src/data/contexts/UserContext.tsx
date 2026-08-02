@@ -1,6 +1,6 @@
 'use client'
 import { createContext, useCallback, useEffect, useState } from 'react'
-import { User } from '@barba/core'
+import { User } from '@barba/contracts'
 import useLocalStorage from '../hooks/useLocalStorage'
 
 export interface UserContextProps {

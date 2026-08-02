@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import { IconX } from '@tabler/icons-react'
-import { UsefulAgenda, UsefulDate } from '@barba/core'
+import { ScheduleUtils, DateUtils } from '@barba/client-shared'
 import useScheduling from '@/data/hooks/useScheduling'
 
 export interface SchedulesInputProps {
@@ -13,7 +13,7 @@ export interface SchedulesInputProps {
 const SchedulesInput = (props: SchedulesInputProps) => {
   const [hourHover, setHourHover] = useState<string | null>(null)
   const { busySchedules } = useScheduling()
-  const { morning, afternoon, night } = UsefulAgenda.timesOfDay()
+  const { morning, afternoon, night } = ScheduleUtils.timesOfDay()
 
   const selectedHour = props.date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
 
@@ -48,7 +48,7 @@ const SchedulesInput = (props: SchedulesInputProps) => {
         onMouseLeave={(_) => setHourHover(null)}
         onClick={() => {
           if (notSelectable) return
-          if (busy || blockedPeriod) return props.dateChanged(UsefulDate.applySchedule(props.date, time))
+          if (busy || blockedPeriod) return props.dateChanged(DateUtils.applySchedule(props.date, time))
         }}
       >
         <span
