@@ -1,6 +1,6 @@
 import { PhoneUtils } from "@barba/client-shared";
 import { StyleSheet, View, Image, Text, Pressable } from "react-native";
-import useUser from "@/src/data/hooks/useUser";
+import useUser from "../../../data/hooks/useUser";
 import React from "react";
 
 const Profile = ({ navigation }: any) => {
@@ -8,7 +8,7 @@ const Profile = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../../../assets/avatar.png')} />
+      <Image source={require('../../../../assets/avatar.png')} />
       <Text style={styles.highlight}>
         Fala, {user?.name}!
       </Text>

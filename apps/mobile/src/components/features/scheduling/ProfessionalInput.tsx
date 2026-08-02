@@ -1,7 +1,7 @@
 import { useProfessionals } from "@barba/client-shared";
 import { Professional } from "@barba/contracts";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import images from '../../data/constants/images'
+import images from '../../../data/constants/images'
 
 export interface ProfessionalInputProps {
   professional: Professional | null

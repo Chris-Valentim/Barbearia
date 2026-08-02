@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import { Scheduling } from "@barba/contracts";
-import useAPI from "@/src/data/hooks/useAPI";
+import useAPI from "../../../data/hooks/useAPI";
 import { useEffect, useState } from "react";
 import SchedulingItem from './SchedulingItem'
-import useUser from "@/src/data/hooks/useUser";
+import useUser from "../../../data/hooks/useUser";
 
 const LatestAppointments = () => {
   const [scheduling, setScheduling] = useState<Scheduling[]>()
@@ -41,7 +41,7 @@ const LatestAppointments = () => {
           <Text style={styles.subtitle}>
             Vamos agendar um novo serviço?
           </Text>
-          <Image source={require('../../../assets/start/garoto-propaganda.png')} style={styles.propagatingBoy} />
+          <Image source={require('../../../../assets/start/garoto-propaganda.png')} style={styles.propagatingBoy} />
         </View>
       )
     }
@@ -49,7 +49,7 @@ const LatestAppointments = () => {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../../../assets/start/logo-brutal.png')} style={styles.logo} />
+      <Image source={require('../../../../assets/start/logo-brutal.png')} style={styles.logo} />
       <Text style={styles.title}>
         Fala, {user?.name}!
       </Text>

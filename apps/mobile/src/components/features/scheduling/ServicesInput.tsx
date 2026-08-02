@@ -1,7 +1,7 @@
 import { useServices } from "@barba/client-shared";
 import { Service } from "@barba/contracts";
 import { Image, StyleSheet, Text, Pressable, View } from "react-native";
-import images from '../../data/constants/images'
+import images from '../../../data/constants/images'
 
 interface ServicesInputProps {
   services: Service[]
