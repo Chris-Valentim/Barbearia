@@ -1,17 +1,31 @@
-"use client";
-import { useCallback } from "react";
+'use client'
+import { useCallback } from 'react'
 
 const useLocalStorage = () => {
   const get = useCallback((key: string) => {
-    const valueLocal = window?.localStorage?.getItem(key);
-    return valueLocal ? JSON.parse(valueLocal) : null;
-  }, []);
+    if (typeof window === 'undefined') return null
+
+    try {
+      const valorLocal = window.localStorage.getItem(key)
+      return valorLocal ? JSON.parse(valorLocal) : null
+    } catch (error) {
+      // Conteúdo corrompido não deve derrubar o carregamento da sessão.
+      console.error(`Falha ao ler "${key}" do localStorage`, error)
+      return null
+    }
+  }, [])
 
   const set = useCallback((key: string, value: any) => {
-    window?.localStorage?.setItem(value, JSON.stringify(key));
-  }, []);
+    if (typeof window === 'undefined') return
 
-  return { get, set };
-};
+    try {
+      window.localStorage.setItem(key, JSON.stringify(value))
+    } catch (error) {
+      console.error(`Falha ao gravar "${key}" no localStorage`, error)
+    }
+  }, [])
 
-export default useLocalStorage;
+  return { get, set }
+}
+
+export default useLocalStorage
