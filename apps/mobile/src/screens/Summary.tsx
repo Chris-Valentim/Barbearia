@@ -1,5 +1,5 @@
 import { StyleSheet, Text, Pressable, View } from "react-native";
-import { UsefulDate } from "@barba/core";
+import { DateUtils } from "@barba/client-shared";
 import useScheduling from "../data/hooks/useScheduling";
 
 const Summary = ({ navigation }: any) => {
@@ -49,7 +49,7 @@ const Summary = ({ navigation }: any) => {
           HORÁRIOS
         </Text>
         <Text style={styles.value}>
-          {date && UsefulDate.formatDate(date)}
+          {date && DateUtils.formatDate(date)}
         </Text>
 
         <Text style={styles.totalLabelValue}>
@@ -62,8 +62,14 @@ const Summary = ({ navigation }: any) => {
         <Pressable
           style={styles.button}
           onPress={async () => {
-            await schedule()
-            navigation.navigate('Start')
+            try {
+              await schedule()
+              navigation.navigate('Main')
+            } catch (error) {
+              // Falha na api mantém o usuário no sumário com a seleção
+              // preservada, em vez de navegar como se tivesse dado certo.
+              console.error(error)
+            }
           }}
         >
           <Text style={styles.textButton}>

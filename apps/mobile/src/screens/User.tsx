@@ -1,11 +1,11 @@
 import { SafeAreaView, StyleSheet, View } from "react-native";
-import Profile from "../components/profile";
+import ProfileCard from "../components/features/user/ProfileCard";
 
 const User = ({ navigation }: any) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ flex: 1, paddingTop: 15 }}>
-        <Profile navigation={navigation} />
+        <ProfileCard navigation={navigation} />
       </View>
     </SafeAreaView>
   )

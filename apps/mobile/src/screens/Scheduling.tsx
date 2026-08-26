@@ -1,12 +1,12 @@
 'use client'
 import { useState } from 'react'
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
-import { Professional, Service } from '@barba/core'
+import { Professional, Service } from '@barba/contracts'
 import useScheduling from '../data/hooks/useScheduling'
-import ServicesInput from '../components/scheduling/ServicesInput'
-import ProfessionalInput from '../components/scheduling/ProfessionalInput'
-import Steps from '../components/scheduling/Steps'
-import DateInput from '../components/scheduling/DateInput'
+import ServicesInput from '../components/features/scheduling/ServicesInput'
+import ProfessionalInput from '../components/features/scheduling/ProfessionalInput'
+import Steps from '../components/features/scheduling/Steps'
+import DateInput from '../components/features/scheduling/DateInput'
 
 const Scheduling = ({ navigation }: any) => {
   const [allowsNextStep, setAllowsNextStep] = useState<boolean>(false)

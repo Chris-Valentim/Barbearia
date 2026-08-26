@@ -1,81 +1,205 @@
-# Turborepo starter
+# 🪓 Barba Brutal
 
-This is an official starter Turborepo.
+Sistema de agendamento para barbearia, com **API**, **site** e **aplicativo móvel**
+compartilhando o mesmo modelo de domínio. Monorepo gerenciado com Turborepo.
 
-## Using this example
+> **Status:** em desenvolvimento. A reorganização estrutural está concluída;
+> a integração ponta a ponta ainda não. Ver [Estado atual](#estado-atual).
 
-Run the following command:
+---
 
-```sh
-npx create-turbo@latest
+## Stack
+
+| Camada | Tecnologia |
+|---|---|
+| API | NestJS 10 · Prisma 5 · SQLite |
+| Web | Next.js 14 (App Router) · Tailwind · shadcn/ui |
+| Mobile | Expo 51 · React Native 0.74 · React Navigation |
+| Monorepo | Turborepo 2 · Yarn Workspaces · TypeScript 5 |
+
+---
+
+## Arquitetura
+
+```mermaid
+graph TD
+    subgraph clientes["Clientes"]
+        WEB["apps/web<br/>Next.js"]
+        MOB["apps/mobile<br/>Expo"]
+    end
+
+    subgraph servidor["Servidor"]
+        API["apps/api<br/>NestJS"]
+        DB[("SQLite<br/>via Prisma")]
+    end
+
+    subgraph compartilhado["Pacotes compartilhados"]
+        CON["@barba/contracts<br/>entidades e fixtures"]
+        CLI["@barba/client-shared<br/>utils e hooks"]
+    end
+
+    WEB -->|HTTP| API
+    MOB -->|HTTP| API
+    API --> DB
+
+    CON -.-> WEB
+    CON -.-> MOB
+    CON -.-> API
+    CLI -.-> WEB
+    CLI -.-> MOB
 ```
 
-## What's inside?
+A divisão dos pacotes segue quem consome o quê:
 
-This Turborepo includes the following packages/apps:
+- **`@barba/contracts`** — as entidades (`Professional`, `Service`, `User`,
+  `Scheduling`, `Client`) e as constantes de domínio. É o único pacote que os
+  três aplicativos compartilham, porque é o que define o formato dos dados que
+  trafegam entre eles. Compilado com `tsup`, já que a api roda em Node.
+- **`@barba/client-shared`** — formatação de data, agenda e telefone, mais os
+  hooks de catálogo. Só web e mobile usam. Distribuído como código-fonte, porque
+  ambos os consumidores são bundlers que já transpilam TypeScript.
 
-### Apps and Packages
+As **regras de negócio de servidor** ficam na api, em `src/scheduling/domain/`,
+e não em pacote compartilhado — nenhum cliente as executa.
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+---
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
+## Estrutura
 
 ```
-cd my-turborepo
-pnpm build
+apps/
+├── api/                        NestJS
+│   ├── prisma/                 schema, migrations e seed
+│   └── src/
+│       ├── db/                 PrismaService
+│       ├── scheduling/
+│       │   ├── domain/         GetBusySchedules, CalendarRepository
+│       │   ├── scheduling.controller.ts
+│       │   └── scheduling.repository.ts
+│       └── service/
+│
+├── web/                        Next.js App Router
+│   ├── public/                 imagens estáticas
+│   └── src/
+│       ├── app/
+│       │   ├── (public)/       landing — sem autenticação
+│       │   ├── (private)/      agendamento — exige usuário
+│       │   ├── (auth)/login/   formulário de entrada
+│       │   ├── providers.tsx   fronteira de client component
+│       │   └── layout.tsx      layout raiz (server component)
+│       ├── components/
+│       │   ├── ui/             primitivos shadcn
+│       │   ├── layout/         Page, Header, Footer, TopMenu, UserMenu
+│       │   ├── common/         Logo, Title, Steps, Assessment…
+│       │   └── features/       agrupado por domínio
+│       └── data/               contexts e hooks
+│
+└── mobile/                     Expo
+    ├── assets/
+    └── src/
+        ├── navigation/         RootNavigator
+        ├── screens/
+        ├── components/         mesma divisão common/features da web
+        └── data/               contexts e hooks
+
+packages/
+├── contracts/                  entidades e fixtures de domínio
+├── client-shared/              utils e hooks de web + mobile
+├── eslint-config/
+└── typescript-config/
 ```
 
-### Develop
+Web e mobile usam a **mesma divisão de componentes** (`common/` para primitivos,
+`features/<domínio>/` para o que pertence a um contexto de negócio), de modo que
+quem lê um dos dois reconhece a organização do outro.
 
-To develop all apps and packages, run the following command:
+---
 
-```
-cd my-turborepo
-pnpm dev
-```
+## Rodando o projeto
 
-### Remote Caching
+**Pré-requisitos:** Node 18+ e Yarn 1.x.
 
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
+```bash
+git clone https://github.com/Chris-Valentim/Barbearia.git
+cd Barbearia
+yarn install
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+Copie os arquivos de ambiente e ajuste se necessário:
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+```bash
+cp apps/api/.env.example apps/api/.env
+cp apps/web/.env.example apps/web/.env.local
+```
+
+Prepare o banco:
+
+```bash
+cd apps/api
+npx prisma migrate dev     # cria o SQLite e aplica o schema
+npx prisma db seed         # popula profissionais e serviços
+```
+
+Suba tudo:
+
+```bash
+yarn dev                   # api :3001 · web :3000 · mobile via Expo
+```
+
+Ou um app isolado:
+
+```bash
+yarn dev --filter=api
+yarn dev --filter=web
+yarn dev --filter=mobile
+```
+
+### Outros comandos
+
+| Comando | O que faz |
+|---|---|
+| `yarn build` | Build de todos os workspaces |
+| `yarn turbo check-types` | `tsc --noEmit` nos 5 workspaces |
+| `yarn lint` | ESLint |
+| `yarn format` | Prettier |
+
+---
+
+## Estado atual
+
+O que **funciona**: build e verificação de tipos passam nos 5 workspaces; a web
+renderiza as 5 rotas; a api compila e expõe os endpoints de serviço e agendamento.
+
+O que **ainda não**: o fluxo de agendamento ponta a ponta. Há divergências
+conhecidas entre o que os clientes chamam e o que a api expõe, e web e mobile
+ainda listam profissionais e serviços a partir das fixtures em
+`@barba/contracts` em vez de consumir a API.
+
+### Próximos passos
+
+- [ ] Alinhar as rotas de agendamento entre clientes e api
+- [ ] Substituir as fixtures por chamadas HTTP
+- [ ] Trocar `localStorage` por `AsyncStorage` no mobile
+- [ ] Unificar os contexts duplicados entre web e mobile
+- [ ] Migrar SQLite → PostgreSQL
+- [ ] Cobertura de testes
+
+---
+
+## Convenções
+
+Commits seguem [Conventional Commits](https://www.conventionalcommits.org/pt-br/)
+com [gitmoji](https://gitmoji.dev/):
 
 ```
-npx turbo link
+♻️ refactor(web): reorganiza componentes por camada e por domínio
 ```
 
-## Useful Links
+Branches saem de `dev` no formato `<tipo>/v<versão>-<slug>` e voltam por merge
+`--no-ff`. A `main` recebe apenas releases de `dev`.
 
-Learn more about the power of Turborepo:
+---
 
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+## Licença
+
+Projeto pessoal de estudo, sem licença de uso definida.

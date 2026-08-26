@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import Home from './Home'
 import Scheduling from './Scheduling'
 import User from './User'
-import Icon from '../components/shared/Icon'
+import Icon from '../components/common/Icon'
 
 const Tab = createBottomTabNavigator()
 
@@ -47,7 +47,7 @@ const Main = () => {
     >
       {tab('Home', Home, 'Inicio', 'home-outline')}
       {tab('Scheduling', Scheduling, 'Agendamento', 'calendar-outline')}
-      {tab('User', User, 'Usuário', 'perso-outline')}
+      {tab('User', User, 'Usuário', 'person-outline')}
     </Tab.Navigator>
   )
 }
