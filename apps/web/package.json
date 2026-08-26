@@ -9,7 +9,8 @@
         "test": "jest",
         "test:watch": "jest --watch",
         "start": "next start",
-        "lint": "next lint"
+        "lint": "next lint",
+        "build:pages": "next build"
     },
     "dependencies": {
         "@barba/client-shared": "*",
