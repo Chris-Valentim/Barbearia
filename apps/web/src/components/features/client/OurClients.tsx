@@ -2,6 +2,9 @@ import { clients } from '@barba/contracts'
 import { LayoutGrid } from '@/components/ui/layout-grid'
 import CustomerItem from '@/components/features/client/CustomerItem'
 import Title from '@/components/common/Title'
+// LayoutGrid renderiza a thumbnail em <motion.img>, que nao passa pelo loader
+// do next/image — o basePath precisa ser aplicado aqui.
+import { withBasePath } from '@/lib/imageLoader'
 
 const OurClients = () => {
   const classes = ['md:col-span-2', 'col-span-1', 'col-span-1', 'md:col-span-2']
@@ -12,7 +15,7 @@ const OurClients = () => {
       content: <CustomerItem name={client.name}
         testimony={client.testimony} />,
       className: classes[i],
-      thumbnail: client.imageUrl
+      thumbnail: withBasePath(client.imageUrl)
     }
   })
 
